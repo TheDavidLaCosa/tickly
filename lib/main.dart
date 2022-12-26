@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tickly/Global%20widgets/redButton.dart';
 import 'package:tickly/Global%20widgets/redText.dart';
+import 'package:tickly/Global%20widgets/textInput.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,14 +32,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+//TODO: Mirar si cal posar classe Padding en general o fer padding classe per classe
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,17 +47,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             redText(text: "Forgot password?", textSize: 25, function: doSomething,),
             redButton(text: 'Sing up', function: doSomething,),
+            const textInput(text: "Keyword of event"),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
-
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
   void doSomething(){
     print("AAA");
