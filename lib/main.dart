@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tickly/Global%20widgets/redButton.dart';
+import 'package:tickly/Global%20widgets/redText.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,11 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
-  void doSomething(){
-    print("AAA");
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -54,10 +50,8 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
+            redText(text: "Forgot password?", textSize: 25, function: doSomething,),
             redButton(text: 'Sing up', function: doSomething,),
-            redButton(text: 'Buy ticket', function: doSomething,),
-            redButton(text: 'Search', function: doSomething,),
-            redButton(text: 'Sing In', function: doSomething,),
           ],
         ),
       ),
@@ -67,6 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
+  void doSomething(){
+    print("AAA");
   }
 
 }
