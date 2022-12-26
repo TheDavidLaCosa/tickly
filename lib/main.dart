@@ -39,6 +39,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
+  void doSomething(){
+    print("AAA");
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -48,11 +53,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: Center(
         child: Column(
-          children: const <Widget>[
-            redButton(text: 'Sing up',),
-            redButton(text: 'Buy ticket',),
-            redButton(text: 'Search',),
-            redButton(text: 'Sing In',),
+          children: <Widget>[
+            redButton(text: 'Sing up', function: doSomething,),
+            redButton(text: 'Buy ticket', function: doSomething,),
+            redButton(text: 'Search', function: doSomething,),
+            redButton(text: 'Sing In', function: doSomething,),
           ],
         ),
       ),
@@ -63,4 +68,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
 }

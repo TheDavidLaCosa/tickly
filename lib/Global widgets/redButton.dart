@@ -8,19 +8,16 @@ import 'package:flutter/material.dart';
 class redButton extends StatelessWidget {
 
   final String text;
+  final Function() function;
 
   const redButton({Key? key,
-                  required this.text}) : super(key: key);
-
-  //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
-  void doSomething(){
-    print("AAA");
-  }
+                  required this.text,
+                  required this.function}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: doSomething,
+      onTap: function,
       child: Container(
         decoration: BoxDecoration(
           color: const Color.fromRGBO(210, 36, 36, 1),
