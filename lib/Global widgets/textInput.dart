@@ -20,6 +20,19 @@ class _textInputState extends State<textInput> {
   Widget build(BuildContext context) {
     return Container(
       width: 300,
+
+      decoration: BoxDecoration(
+        color: Colors.white, //S'ha de posar blanc per a que no es vegi l'hombra dins el textInput.
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(1),
+            blurRadius: 1,
+            offset: const Offset(0, 4), // changes position of shadow
+          ),
+        ],
+      ),
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [

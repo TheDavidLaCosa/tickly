@@ -23,8 +23,15 @@ class redButton extends StatelessWidget {
           color: const Color.fromRGBO(210, 36, 36, 1),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(),
-        ),
 
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(1),
+              blurRadius: 1,
+              offset: const Offset(0, 4), // changes position of shadow
+            ),
+          ],
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

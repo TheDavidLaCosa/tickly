@@ -46,7 +46,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           children: <Widget>[
             redText(text: "Forgot password?", textSize: 25, function: doSomething,),
+            const SizedBox(height: 10,),
             redButton(text: 'Sing up', function: doSomething,),
+            const SizedBox(height: 10,),
             const textInput(text: "Keyword of event"),
           ],
         ),
