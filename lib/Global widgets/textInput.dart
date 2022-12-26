@@ -18,17 +18,19 @@ class _textInputState extends State<textInput> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget> [
-        SizedBox(
-          width: 300,
-          height: 50,
-          child: TextField(
+    return Container(
+      width: 300,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget> [
+          TextField(
+            style: const TextStyle(fontWeight: FontWeight.bold),
             controller: estat,
             decoration: InputDecoration(
               hintText: widget.text, //Posem widget perqué és statefull.
-              border: const OutlineInputBorder(),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
               suffixIcon: IconButton(
                 onPressed: () {
                   estat.clear();
@@ -37,8 +39,8 @@ class _textInputState extends State<textInput> {
               ),
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }
