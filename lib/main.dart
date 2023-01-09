@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tickly/Global%20widgets/redButton.dart';
 import 'package:tickly/Global%20widgets/redText.dart';
 import 'package:tickly/Global%20widgets/textInput.dart';
+import 'package:tickly/Global%20widgets/timePicker.dart';
 
 void main() {
   runApp(const MyApp());
@@ -45,11 +46,13 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            redText(text: "Forgot password?", textSize: 25, function: doSomething,),
+            RedText(text: "Forgot password?", textSize: 25, function: doSomething,),
             const SizedBox(height: 10,),
-            redButton(text: 'Sing up', function: doSomething,),
+            RedButton(text: 'Sing up', function: doSomething,),
             const SizedBox(height: 10,),
-            const textInput(text: "Keyword of event"),
+            const TextInput(text: "Keyword of event"),
+            const SizedBox(height: 10,),
+            const TimePicker(),
           ],
         ),
       ),

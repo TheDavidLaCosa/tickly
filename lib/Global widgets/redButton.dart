@@ -5,12 +5,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class redButton extends StatelessWidget {
+class RedButton extends StatelessWidget {
 
   final String text;
   final Function() function;
 
-  const redButton({Key? key,
+  const RedButton({Key? key,
                   required this.text,
                   required this.function}) : super(key: key);
 

@@ -1,20 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class textInput extends StatefulWidget {
+class TextInput extends StatefulWidget {
 
   final String text;
 
-  const textInput({Key? key,
+  const TextInput({Key? key,
                    required this.text}) : super(key: key);
 
   @override
-  State<textInput> createState() => _textInputState();
+  State<TextInput> createState() => _TextInputState();
 }
 
-class _textInputState extends State<textInput> {
+class _TextInputState extends State<TextInput> {
 
   final estat = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {

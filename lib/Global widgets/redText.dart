@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class redText extends StatelessWidget {
+class RedText extends StatelessWidget {
 
   final String text;
   final double textSize;
   final Function() function;
 
-  const redText({Key? key,
+  const RedText({Key? key,
                  required this.text,
                  required this.textSize,
                  required this.function}) : super(key: key);
