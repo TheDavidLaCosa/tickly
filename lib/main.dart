@@ -46,21 +46,34 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            RedText(text: "Forgot password?", textSize: 25, function: doSomething,),
-            const SizedBox(height: 10,),
             RedButton(text: 'Sing up', function: doSomething,),
-            const SizedBox(height: 10,),
-            const TextInput(text: "Keyword of event"),
-            const SizedBox(height: 10,),
-            const TimePicker(),
           ],
         ),
       ),
     );
   }
+
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
   void doSomething(){
-    print("AAA");
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaLogin()));
   }
 
+  //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
+  void CarregaLogin(){
+    Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaLogin()));
+  }
+}
+
+class PantallaLogin extends StatelessWidget {
+  const PantallaLogin({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+      ),
+      body: const Text('Segona pantalla'),
+    );
+  }
 }
