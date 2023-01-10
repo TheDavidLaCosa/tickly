@@ -71,22 +71,32 @@ class PantallaLogin extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            const SizedBox(height: 50,),
             const Text("Hello Again!", style: TextStyle(fontFamily: "jaldi",
-                                                        fontSize: 50)),
+                                                        fontSize: 50,
+                                                        fontWeight: FontWeight.bold)),
             const SizedBox(height: 10),
-            const Text("Wellcome back, you've been missed",style: TextStyle(fontFamily: "jaldi", fontSize: 20)),
-            const SizedBox(height: 10),
-            const TextInput(text: "Enter email text"),
-            const SizedBox(height: 10),
-            const TextInput(text: "Enter email text"),
-            const SizedBox(height: 10),
-            RedText(text: "Sign in", textSize: 25, function: () => {print("a")}),
-            const SizedBox(height: 10),
+            const Text("Wellcome back, you've been missed",style: TextStyle(fontFamily: "jaldi",
+                                                                            fontSize: 20,
+                                                                            fontWeight: FontWeight.bold)),
+
+            const SizedBox(height: 60),
+            const TextInput(text: "Enter email address"),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                const SizedBox(height: 10),
+                const TextInput(text: "Password"),
+                const SizedBox(height: 10),
+                RedText(text: "Forgot password?", textSize: 25, function: () => {print("a")}),
+                ]
+            ),
+            const SizedBox(height: 50),
             RedButton(text: "Sign in", function: () => {print("a")}),
-            const SizedBox(height: 20,),
+            const SizedBox(height: 40,),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -95,6 +105,8 @@ class PantallaLogin extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
+
+            //TODO: Borrar aquesta línia abans d'entrega.
             RedButton(text: "[[[CLOSE MENÚ]]]", function: () => {Navigator.pop(context)})
           ],
         ),
