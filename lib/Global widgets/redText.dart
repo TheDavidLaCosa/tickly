@@ -16,8 +16,11 @@ class RedText extends StatelessWidget {
     return GestureDetector(
       onTap: function,
       child: Center(
-        child: Text(text, style: TextStyle(color: const Color.fromRGBO(255, 0, 0, 1),
-                                                 fontSize: textSize)),
+        child: Text(text,
+                    style: TextStyle(color: const Color.fromRGBO(255, 0, 0, 1),
+                    fontSize: textSize,
+                    fontFamily: "jadi")
+        ),
       ),
     );
   }

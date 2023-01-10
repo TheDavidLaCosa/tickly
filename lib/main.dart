@@ -73,7 +73,33 @@ class PantallaLogin extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Second Route'),
       ),
-      body: const Text('Segona pantalla'),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            const Text("Hello Again!", style: TextStyle(fontFamily: "jaldi",
+                                                        fontSize: 50)),
+            const SizedBox(height: 10),
+            const Text("Wellcome back, you've been missed"),
+            const SizedBox(height: 10),
+            const TextInput(text: "Enter email text"),
+            const SizedBox(height: 10),
+            const TextInput(text: "Enter email text"),
+            const SizedBox(height: 10),
+            RedText(text: "Sign in", textSize: 25, function: () => {print("a")}),
+            const SizedBox(height: 10),
+            RedButton(text: "Sign in", function: () => {print("a")}),
+            Row(
+              children: <Widget>[
+                Text("Not a member?"),
+                RedText(text: "Register here", textSize: 25, function: () => {print("a")})
+              ],
+            ),
+            const SizedBox(height: 30),
+            RedButton(text: "[[[CLOSE MENÚ]]]", function: () => {Navigator.pop(context)})
+          ],
+        ),
+      )
     );
   }
 }
