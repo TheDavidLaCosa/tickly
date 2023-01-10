@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tickly/PantallaLogin.dart';
 
 import 'Global widgets/redButton.dart';
 import 'Global widgets/redText.dart';
@@ -36,11 +37,11 @@ class _PantallaRegisterState extends State<PantallaRegister> {
               fontWeight: FontWeight.bold)),
 
           const SizedBox(height: 60),
-          TextInput(text: "Enter email address"), //, controller: widget.txtEmail),
+          TextInput(text: "Enter email address", controller: widget.txtEmail),
           const SizedBox(height: 15),
-          TextInput(text: "Password"), //, controller: widget.txtEmail),
+          TextInput(text: "Password", controller: widget.txtEmail),
           const SizedBox(height: 15),
-          TextInput(text: "Repeat password"), //, controller: widget.txtEmail),
+          TextInput(text: "Repeat password", controller: widget.txtEmail),
 
           const SizedBox(height: 50),
           RedButton(text: "Sign up", function: () => {print("txtInEmail.text")}),
@@ -49,7 +50,8 @@ class _PantallaRegisterState extends State<PantallaRegister> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               const Text("Already a member?  ", style: TextStyle(fontFamily: "jaldi", fontSize: 25)),
-              RedText(text: "Log in here", textSize: 25, function: () => {print("a")})
+              RedText(text: "Log in here", textSize: 25, function: () => {Navigator.of(context).pushReplacement(
+                                                                          MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()))})
             ],
           ),
           const SizedBox(height: 30),
