@@ -49,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           children: <Widget>[
-            RedButton(text: 'Sing up', function: doSomething,),
+            RedButton(text: 'Sing up', function: CarregaLogin,),
           ],
         ),
       ),
@@ -62,6 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
   void CarregaLogin(){
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaLogin()));
+    Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaLogin()));
   }
 }

@@ -5,7 +5,11 @@ import 'Global widgets/redText.dart';
 import 'Global widgets/textInput.dart';
 
 class PantallaLogin extends StatelessWidget {
-  const PantallaLogin({super.key});
+
+  final txtInEmail = TextEditingController();
+  final txtInPassword = TextEditingController();
+
+  PantallaLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,19 +28,19 @@ class PantallaLogin extends StatelessWidget {
               fontWeight: FontWeight.bold)),
 
           const SizedBox(height: 60),
-          const TextInput(text: "Enter email address"),
+          TextInput(text: "Enter email address", controller: txtInEmail,),
 
           Column(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 const SizedBox(height: 10),
-                const TextInput(text: "Password"),
+                TextInput(text: "Password", controller: txtInPassword),
                 const SizedBox(height: 10),
                 RedText(text: "Forgot password?", textSize: 25, function: () => {print("a")}),
               ]
           ),
           const SizedBox(height: 50),
-          RedButton(text: "Sign in", function: () => {print("a")}),
+          RedButton(text: "Sign in", function: () => {print(txtInEmail.text)}),
           const SizedBox(height: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

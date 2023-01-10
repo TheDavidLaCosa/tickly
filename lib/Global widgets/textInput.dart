@@ -3,18 +3,17 @@ import 'package:flutter/material.dart';
 class TextInput extends StatefulWidget {
 
   final String text;
+  final TextEditingController controller;
 
   const TextInput({Key? key,
-                   required this.text}) : super(key: key);
+                   required this.text,
+                   required this.controller}) : super(key: key);
 
   @override
   State<TextInput> createState() => _TextInputState();
 }
 
 class _TextInputState extends State<TextInput> {
-
-  final estat = TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,7 @@ class _TextInputState extends State<TextInput> {
             style: const TextStyle(fontWeight: FontWeight.bold,
                                    fontFamily: "jaldi",
                                    fontSize: 20),
-            controller: estat,
+            controller: widget.controller,
             decoration: InputDecoration(
               hintText: widget.text, //Posem widget perqué és statefull.
               border: OutlineInputBorder(
@@ -48,7 +47,7 @@ class _TextInputState extends State<TextInput> {
               ),
               suffixIcon: IconButton(
                 onPressed: () {
-                  estat.clear();
+                  widget.controller.clear();
                 },
                 icon: const Icon(Icons.clear),
               ),
