@@ -38,7 +38,8 @@ class _TextInputState extends State<TextInput> {
         children: <Widget> [
           TextField(
             style: const TextStyle(fontWeight: FontWeight.bold,
-                                   fontFamily: "jaldi",),
+                                   fontFamily: "jaldi",
+                                   fontSize: 20),
             controller: estat,
             decoration: InputDecoration(
               hintText: widget.text, //Posem widget perqué és statefull.
