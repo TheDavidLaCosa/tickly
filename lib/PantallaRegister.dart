@@ -20,6 +20,20 @@ class PantallaRegister extends StatefulWidget {
 }
 
 class _PantallaRegisterState extends State<PantallaRegister> {
+
+  void saveData(){
+
+    if(widget.txtEmail.text == "" || widget.txtPassword.text == "" || widget.txtRepPassword.text == ""){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Falten dades"),
+      ));
+      return;
+    }
+
+
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,12 +53,12 @@ class _PantallaRegisterState extends State<PantallaRegister> {
           const SizedBox(height: 60),
           TextInput(text: "Enter email address", controller: widget.txtEmail),
           const SizedBox(height: 15),
-          TextInput(text: "Password", controller: widget.txtEmail),
+          TextInput(text: "Password", controller: widget.txtPassword),
           const SizedBox(height: 15),
-          TextInput(text: "Repeat password", controller: widget.txtEmail),
+          TextInput(text: "Repeat password", controller: widget.txtRepPassword),
 
           const SizedBox(height: 50),
-          RedButton(text: "Sign up", function: () => {print("txtInEmail.text")}),
+          RedButton(text: "Sign up", function: saveData),
           const SizedBox(height: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
