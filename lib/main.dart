@@ -3,6 +3,7 @@ import 'package:tickly/Global%20widgets/redButton.dart';
 import 'package:tickly/Global%20widgets/redText.dart';
 import 'package:tickly/Global%20widgets/textInput.dart';
 import 'package:tickly/Global%20widgets/timePicker.dart';
+import 'package:tickly/PantallaRegister.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,23 +45,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Center(
-        child: Column(
-          children: <Widget>[
-            RedText(text: "Forgot password?", textSize: 25, function: doSomething,),
-            const SizedBox(height: 10,),
-            RedButton(text: 'Sing up', function: doSomething,),
-            const SizedBox(height: 10,),
-            const TextInput(text: "Keyword of event"),
-            const SizedBox(height: 10,),
-            const TimePicker(),
-          ],
+        child: RedButton(text: 'Sing up', function: doSomething,),
         ),
-      ),
     );
   }
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
   void doSomething(){
-    print("AAA");
+    Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => PantallaRegister()));
   }
 
 }
