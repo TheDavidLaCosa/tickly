@@ -40,8 +40,11 @@ class RedButton extends StatelessWidget {
               height: 50,
               //padding: const EdgeInsets.fromLTRB(110, 10, 110, 10),
               child: Center(
-                child: Text(text, style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w300, color: Color.fromRGBO(
-                  255, 255, 255, 1.0))),
+                child: Text(text, style: const TextStyle(fontSize: 25,
+                                                         fontWeight: FontWeight.w300,
+                                                         color: Color.fromRGBO(255, 255, 255, 1.0),
+                                                         fontFamily: "jaldi",)),
+
               ),
             ),
 

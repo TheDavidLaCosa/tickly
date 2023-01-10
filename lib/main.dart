@@ -70,17 +70,14 @@ class PantallaLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Second Route'),
-      ),
-      body: Center(
-        child: Column(
+      body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+            const SizedBox(height: 50,),
             const Text("Hello Again!", style: TextStyle(fontFamily: "jaldi",
                                                         fontSize: 50)),
             const SizedBox(height: 10),
-            const Text("Wellcome back, you've been missed"),
+            const Text("Wellcome back, you've been missed",style: TextStyle(fontFamily: "jaldi", fontSize: 20)),
             const SizedBox(height: 10),
             const TextInput(text: "Enter email text"),
             const SizedBox(height: 10),
@@ -89,9 +86,11 @@ class PantallaLogin extends StatelessWidget {
             RedText(text: "Sign in", textSize: 25, function: () => {print("a")}),
             const SizedBox(height: 10),
             RedButton(text: "Sign in", function: () => {print("a")}),
+            const SizedBox(height: 20,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Not a member?"),
+                const Text("Not a member?  ", style: TextStyle(fontFamily: "jaldi", fontSize: 25)),
                 RedText(text: "Register here", textSize: 25, function: () => {print("a")})
               ],
             ),
@@ -99,7 +98,6 @@ class PantallaLogin extends StatelessWidget {
             RedButton(text: "[[[CLOSE MENÚ]]]", function: () => {Navigator.pop(context)})
           ],
         ),
-      )
     );
   }
 }

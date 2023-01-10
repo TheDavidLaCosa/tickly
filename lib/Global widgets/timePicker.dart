@@ -39,8 +39,7 @@ class _TimePickerState extends State<TimePicker> {
       child: MaterialButton(
           onPressed: _showDatePicker,
           child: Center(
-            child: Text(DateFormat('dd-MM-yyyy').format(DateTime.now()), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: Color.fromRGBO(
-                52, 52, 52, 1.0))),
+            child: Text(DateFormat('dd-MM-yyyy').format(DateTime.now()), style: TextStyle(fontSize: 20, fontWeight: FontWeight.w300, color: Color.fromRGBO(52, 52, 52, 1.0), fontFamily: "jaldi",)),
               ),
             ),
     );

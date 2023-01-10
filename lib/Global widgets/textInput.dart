@@ -37,7 +37,8 @@ class _TextInputState extends State<TextInput> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget> [
           TextField(
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold,
+                                   fontFamily: "jaldi",),
             controller: estat,
             decoration: InputDecoration(
               hintText: widget.text, //Posem widget perqué és statefull.

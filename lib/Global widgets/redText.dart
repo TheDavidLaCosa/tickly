@@ -19,7 +19,7 @@ class RedText extends StatelessWidget {
         child: Text(text,
                     style: TextStyle(color: const Color.fromRGBO(255, 0, 0, 1),
                     fontSize: textSize,
-                    fontFamily: "jadi")
+                    fontFamily: "jaldi")
         ),
       ),
     );
