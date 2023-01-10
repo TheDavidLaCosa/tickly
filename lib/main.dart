@@ -3,6 +3,7 @@ import 'package:tickly/Global%20widgets/redButton.dart';
 import 'package:tickly/Global%20widgets/redText.dart';
 import 'package:tickly/Global%20widgets/textInput.dart';
 import 'package:tickly/Global%20widgets/timePicker.dart';
+import 'package:tickly/PantallaRegister.dart';
 
 import 'PantallaLogin.dart';
 
@@ -33,7 +34,6 @@ class MyHomePage extends StatefulWidget {
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
-
 }
 
 //TODO: Mirar si cal posar classe Padding en general o fer padding classe per classe
@@ -55,9 +55,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
   void doSomething(){
+    Navigator.push(context,
+                   MaterialPageRoute(builder: (context) => PantallaRegister()));
   }
 
   //Aquesta el nom és temporal, la funció es fa servir per veure que funciona el GestureDetector
