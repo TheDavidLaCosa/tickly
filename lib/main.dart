@@ -4,8 +4,9 @@ import 'package:tickly/Global%20widgets/redText.dart';
 import 'package:tickly/Global%20widgets/textInput.dart';
 import 'package:tickly/Global%20widgets/timePicker.dart';
 import 'package:tickly/PantallaRegister.dart';
-
 import 'PantallaLogin.dart';
+import 'PantallaSearch.dart';
+import 'PantallaResults.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PantallaLogin(),
+      home: PantallaSearch(),
     );
   }
 }
