@@ -25,13 +25,12 @@ class _PantallaSearchState extends State<PantallaSearch> {
   final _location = TextEditingController();
 
   Future<EventModel> _search(
-      String event, String startDate, String endDate, String location) async {
+      String event, String startDate, String location) async {
     final uri = Uri.https('app.ticketmaster.com', 'discovery/v2/events', {
       'apikey': '7elxdku9GGG5k8j0Xm8KWdANDgecHMV0',
       'keyword': event,
-      'locale': '*',
+      'locale': 'es',
       'startDateTime': startDate,
-      'endDateTime': endDate,
       'city': location,
       'size': "200",
     });
@@ -143,57 +142,30 @@ class _PantallaSearchState extends State<PantallaSearch> {
                           fontFamily: "jaldi",
                           fontSize: 30,
                           fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 35),
                   TextInput(text: "Keyword of the event", controller: _event),
                   const SizedBox(height: 20),
                   TextInput(
-                      text: "Location of the event", controller: _location),
-                  const SizedBox(height: 20),
-                  const Text("Date of the event",
+                      text: "City of the event", controller: _location),
+                  const SizedBox(height: 45),
+                  const Text("Events starting after:",
                       style: TextStyle(fontFamily: "jaldi", fontSize: 22)),
-                  Row(
-                    children: <Widget>[
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            const Text("From",
-                                style: TextStyle(
-                                    fontFamily: "jaldi", fontSize: 19)),
-                            TimePicker(onDateSelected: (_auxDate) {
-                              _startDate = _formatter.format(DateTime(
-                                  _auxDate.year, _auxDate.month, _auxDate.day));
-                              print(_startDate);
-                            })
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Column(
-                          children: <Widget>[
-                            const Text("To",
-                                style: TextStyle(
-                                    fontFamily: "jaldi", fontSize: 19)),
-                            TimePicker(onDateSelected: (_auxDate) {
-                              _endDate = _formatter.format(DateTime(
-                                  _auxDate.year,
-                                  _auxDate.month,
-                                  _auxDate.day,
-                                  23,
-                                  59));
-                              print(_endDate);
-                            })
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  const SizedBox(height: 10),
+                  TimePicker(onDateSelected: (_auxDate) {
+                    _startDate = _formatter.format(DateTime(
+                        _auxDate.year,
+                        _auxDate.month,
+                        _auxDate.day,
+                        00,
+                        00));
+                    print(_endDate);
+                  }),
                   const SizedBox(height: 50),
                   //TODO Red button
                   RedButton(
                       text: "SEARCH",
                       function: () => {
-                            _search(_event.text, _startDate, _endDate,
-                                    _location.text)
+                            _search(_event.text, _startDate, _location.text)
                                 .then((data) {
                               Navigator.push(
                                 context,

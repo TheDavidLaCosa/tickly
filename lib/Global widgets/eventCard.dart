@@ -47,7 +47,10 @@ class _eventCardState extends State<eventCard> {
               height: 50,
               child: AspectRatio(
                 aspectRatio: 16/9,
-                child: Image.asset(widget.image),
+                child: FadeInImage.assetNetwork(
+                  placeholder: 'assets/images/prova.jpg',
+                  image: widget.image,
+                ),
               )),
           const SizedBox(width: 15),
           Expanded(
