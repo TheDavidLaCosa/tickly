@@ -1,13 +1,3 @@
-// To parse this JSON data, do
-//
-//     final eventModel = eventModelFromJson(jsonString);
-
-import 'dart:convert';
-
-EventModel eventModelFromJson(String str) => EventModel.fromJson(json.decode(str));
-
-String eventModelToJson(EventModel data) => json.encode(data.toJson());
-
 class EventModel {
   EventModel({
     required this.embedded,
@@ -15,21 +5,24 @@ class EventModel {
     required this.page,
   });
 
-  EventModelEmbedded embedded;
-  EventModelLinks links;
-  Page page;
+  final EventModelEmbedded? embedded;
+  final EventModelLinks? links;
+  final Page? page;
 
-  factory EventModel.fromJson(Map<String, dynamic> json) => EventModel(
-    embedded: EventModelEmbedded.fromJson(json["_embedded"]),
-    links: EventModelLinks.fromJson(json["_links"]),
-    page: Page.fromJson(json["page"]),
-  );
+  factory EventModel.fromJson(Map<String, dynamic> json){
+    return EventModel(
+      embedded: json["_embedded"] == null ? null : EventModelEmbedded.fromJson(json["_embedded"]),
+      links: json["_links"] == null ? null : EventModelLinks.fromJson(json["_links"]),
+      page: json["page"] == null ? null : Page.fromJson(json["page"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "_embedded": embedded.toJson(),
-    "_links": links.toJson(),
-    "page": page.toJson(),
+    "_embedded": embedded?.toJson(),
+    "_links": links?.toJson(),
+    "page": page?.toJson(),
   };
+
 }
 
 class EventModelEmbedded {
@@ -37,15 +30,18 @@ class EventModelEmbedded {
     required this.events,
   });
 
-  List<Event> events;
+  final List<Event> events;
 
-  factory EventModelEmbedded.fromJson(Map<String, dynamic> json) => EventModelEmbedded(
-    events: List<Event>.from(json["events"].map((x) => Event.fromJson(x))),
-  );
+  factory EventModelEmbedded.fromJson(Map<String, dynamic> json){
+    return EventModelEmbedded(
+      events: json["events"] == null ? [] : List<Event>.from(json["events"]!.map((x) => Event.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "events": List<dynamic>.from(events.map((x) => x.toJson())),
+    "events": events.map((x) => x?.toJson()).toList(),
   };
+
 }
 
 class Event {
@@ -60,136 +56,149 @@ class Event {
     required this.sales,
     required this.dates,
     required this.classifications,
-    this.promoter,
-    this.promoters,
-    this.pleaseNote,
-    this.priceRanges,
-    this.products,
-    required this.seatmap,
-    this.accessibility,
-    this.ticketLimit,
-    this.ageRestrictions,
-    this.ticketing,
+    required this.promoter,
+    required this.promoters,
+    required this.priceRanges,
+    required this.accessibility,
+    required this.ticketLimit,
+    required this.ageRestrictions,
+    required this.ticketing,
     required this.links,
     required this.embedded,
-    this.info,
-    this.outlets,
+    required this.pleaseNote,
+    required this.seatmap,
+    required this.doorsTimes,
+    required this.info,
+    required this.outlets,
   });
 
-  String name;
-  EventType type;
-  String id;
-  bool test;
-  String url;
-  Locale locale;
-  List<Image> images;
-  Sales sales;
-  Dates dates;
-  List<Classification> classifications;
-  Promoter? promoter;
-  List<Promoter>? promoters;
-  String? pleaseNote;
-  List<PriceRange>? priceRanges;
-  List<Product>? products;
-  Seatmap seatmap;
-  Accessibility? accessibility;
-  TicketLimit? ticketLimit;
-  AgeRestrictions? ageRestrictions;
-  Ticketing? ticketing;
-  EventLinks links;
-  EventEmbedded embedded;
-  String? info;
-  List<Outlet>? outlets;
+  final String? name;
+  final String? type;
+  final String? id;
+  final bool? test;
+  final String? url;
+  final String? locale;
+  final List<Image> images;
+  final Sales? sales;
+  final Dates? dates;
+  final List<Classification> classifications;
+  final Promoter? promoter;
+  final List<Promoter> promoters;
+  final List<PriceRange> priceRanges;
+  final Accessibility? accessibility;
+  final TicketLimit? ticketLimit;
+  final AgeRestrictions? ageRestrictions;
+  final Ticketing? ticketing;
+  final EventLinks? links;
+  final EventEmbedded? embedded;
+  final String? pleaseNote;
+  final Seatmap? seatmap;
+  final DoorsTimes? doorsTimes;
+  final String? info;
+  final List<Outlet> outlets;
 
-  factory Event.fromJson(Map<String, dynamic> json) => Event(
-    name: json["name"],
-    type: eventTypeValues.map[json["type"]]!,
-    id: json["id"],
-    test: json["test"],
-    url: json["url"],
-    locale: localeValues.map[json["locale"]]!,
-    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-    sales: Sales.fromJson(json["sales"]),
-    dates: Dates.fromJson(json["dates"]),
-    classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
-    promoter: json["promoter"] == null ? null : Promoter.fromJson(json["promoter"]),
-    promoters: json["promoters"] == null ? [] : List<Promoter>.from(json["promoters"]!.map((x) => Promoter.fromJson(x))),
-    pleaseNote: json["pleaseNote"],
-    priceRanges: json["priceRanges"] == null ? [] : List<PriceRange>.from(json["priceRanges"]!.map((x) => PriceRange.fromJson(x))),
-    products: json["products"] == null ? [] : List<Product>.from(json["products"]!.map((x) => Product.fromJson(x))),
-    seatmap: Seatmap.fromJson(json["seatmap"]),
-    accessibility: json["accessibility"] == null ? null : Accessibility.fromJson(json["accessibility"]),
-    ticketLimit: json["ticketLimit"] == null ? null : TicketLimit.fromJson(json["ticketLimit"]),
-    ageRestrictions: json["ageRestrictions"] == null ? null : AgeRestrictions.fromJson(json["ageRestrictions"]),
-    ticketing: json["ticketing"] == null ? null : Ticketing.fromJson(json["ticketing"]),
-    links: EventLinks.fromJson(json["_links"]),
-    embedded: EventEmbedded.fromJson(json["_embedded"]),
-    info: json["info"],
-    outlets: json["outlets"] == null ? [] : List<Outlet>.from(json["outlets"]!.map((x) => Outlet.fromJson(x))),
-  );
+  factory Event.fromJson(Map<String, dynamic> json){
+    return Event(
+      name: json["name"],
+      type: json["type"],
+      id: json["id"],
+      test: json["test"],
+      url: json["url"],
+      locale: json["locale"],
+      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      sales: json["sales"] == null ? null : Sales.fromJson(json["sales"]),
+      dates: json["dates"] == null ? null : Dates.fromJson(json["dates"]),
+      classifications: json["classifications"] == null ? [] : List<Classification>.from(json["classifications"]!.map((x) => Classification.fromJson(x))),
+      promoter: json["promoter"] == null ? null : Promoter.fromJson(json["promoter"]),
+      promoters: json["promoters"] == null ? [] : List<Promoter>.from(json["promoters"]!.map((x) => Promoter.fromJson(x))),
+      priceRanges: json["priceRanges"] == null ? [] : List<PriceRange>.from(json["priceRanges"]!.map((x) => PriceRange.fromJson(x))),
+      accessibility: json["accessibility"] == null ? null : Accessibility.fromJson(json["accessibility"]),
+      ticketLimit: json["ticketLimit"] == null ? null : TicketLimit.fromJson(json["ticketLimit"]),
+      ageRestrictions: json["ageRestrictions"] == null ? null : AgeRestrictions.fromJson(json["ageRestrictions"]),
+      ticketing: json["ticketing"] == null ? null : Ticketing.fromJson(json["ticketing"]),
+      links: json["_links"] == null ? null : EventLinks.fromJson(json["_links"]),
+      embedded: json["_embedded"] == null ? null : EventEmbedded.fromJson(json["_embedded"]),
+      pleaseNote: json["pleaseNote"],
+      seatmap: json["seatmap"] == null ? null : Seatmap.fromJson(json["seatmap"]),
+      doorsTimes: json["doorsTimes"] == null ? null : DoorsTimes.fromJson(json["doorsTimes"]),
+      info: json["info"],
+      outlets: json["outlets"] == null ? [] : List<Outlet>.from(json["outlets"]!.map((x) => Outlet.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "type": eventTypeValues.reverse[type],
+    "type": type,
     "id": id,
     "test": test,
     "url": url,
-    "locale": localeValues.reverse[locale],
-    "images": List<dynamic>.from(images.map((x) => x.toJson())),
-    "sales": sales.toJson(),
-    "dates": dates.toJson(),
-    "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
+    "locale": locale,
+    "images": images.map((x) => x?.toJson()).toList(),
+    "sales": sales?.toJson(),
+    "dates": dates?.toJson(),
+    "classifications": classifications.map((x) => x?.toJson()).toList(),
     "promoter": promoter?.toJson(),
-    "promoters": promoters == null ? [] : List<dynamic>.from(promoters!.map((x) => x.toJson())),
-    "pleaseNote": pleaseNote,
-    "priceRanges": priceRanges == null ? [] : List<dynamic>.from(priceRanges!.map((x) => x.toJson())),
-    "products": products == null ? [] : List<dynamic>.from(products!.map((x) => x.toJson())),
-    "seatmap": seatmap.toJson(),
+    "promoters": promoters.map((x) => x?.toJson()).toList(),
+    "priceRanges": priceRanges.map((x) => x?.toJson()).toList(),
     "accessibility": accessibility?.toJson(),
     "ticketLimit": ticketLimit?.toJson(),
     "ageRestrictions": ageRestrictions?.toJson(),
     "ticketing": ticketing?.toJson(),
-    "_links": links.toJson(),
-    "_embedded": embedded.toJson(),
+    "_links": links?.toJson(),
+    "_embedded": embedded?.toJson(),
+    "pleaseNote": pleaseNote,
+    "seatmap": seatmap?.toJson(),
+    "doorsTimes": doorsTimes?.toJson(),
     "info": info,
-    "outlets": outlets == null ? [] : List<dynamic>.from(outlets!.map((x) => x.toJson())),
+    "outlets": outlets.map((x) => x?.toJson()).toList(),
   };
+
 }
 
 class Accessibility {
   Accessibility({
-    this.info,
     required this.ticketLimit,
+    required this.info,
   });
 
-  String? info;
-  int ticketLimit;
+  final int? ticketLimit;
+  final String? info;
 
-  factory Accessibility.fromJson(Map<String, dynamic> json) => Accessibility(
-    info: json["info"],
-    ticketLimit: json["ticketLimit"],
-  );
+  factory Accessibility.fromJson(Map<String, dynamic> json){
+    return Accessibility(
+      ticketLimit: json["ticketLimit"],
+      info: json["info"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "info": info,
     "ticketLimit": ticketLimit,
+    "info": info,
   };
+
 }
 
 class AgeRestrictions {
   AgeRestrictions({
     required this.legalAgeEnforced,
+    required this.ageRuleDescription,
   });
 
-  bool legalAgeEnforced;
+  final bool? legalAgeEnforced;
+  final String? ageRuleDescription;
 
-  factory AgeRestrictions.fromJson(Map<String, dynamic> json) => AgeRestrictions(
-    legalAgeEnforced: json["legalAgeEnforced"],
-  );
+  factory AgeRestrictions.fromJson(Map<String, dynamic> json){
+    return AgeRestrictions(
+      legalAgeEnforced: json["legalAgeEnforced"],
+      ageRuleDescription: json["ageRuleDescription"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "legalAgeEnforced": legalAgeEnforced,
+    "ageRuleDescription": ageRuleDescription,
   };
+
 }
 
 class Classification {
@@ -198,38 +207,41 @@ class Classification {
     required this.segment,
     required this.genre,
     required this.subGenre,
-    this.type,
-    this.subType,
+    required this.type,
+    required this.subType,
     required this.family,
   });
 
-  bool primary;
-  Genre segment;
-  Genre genre;
-  Genre subGenre;
-  Genre? type;
-  Genre? subType;
-  bool family;
+  final bool? primary;
+  final Genre? segment;
+  final Genre? genre;
+  final Genre? subGenre;
+  final Genre? type;
+  final Genre? subType;
+  final bool? family;
 
-  factory Classification.fromJson(Map<String, dynamic> json) => Classification(
-    primary: json["primary"],
-    segment: Genre.fromJson(json["segment"]),
-    genre: Genre.fromJson(json["genre"]),
-    subGenre: Genre.fromJson(json["subGenre"]),
-    type: json["type"] == null ? null : Genre.fromJson(json["type"]),
-    subType: json["subType"] == null ? null : Genre.fromJson(json["subType"]),
-    family: json["family"],
-  );
+  factory Classification.fromJson(Map<String, dynamic> json){
+    return Classification(
+      primary: json["primary"],
+      segment: json["segment"] == null ? null : Genre.fromJson(json["segment"]),
+      genre: json["genre"] == null ? null : Genre.fromJson(json["genre"]),
+      subGenre: json["subGenre"] == null ? null : Genre.fromJson(json["subGenre"]),
+      type: json["type"] == null ? null : Genre.fromJson(json["type"]),
+      subType: json["subType"] == null ? null : Genre.fromJson(json["subType"]),
+      family: json["family"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "primary": primary,
-    "segment": segment.toJson(),
-    "genre": genre.toJson(),
-    "subGenre": subGenre.toJson(),
+    "segment": segment?.toJson(),
+    "genre": genre?.toJson(),
+    "subGenre": subGenre?.toJson(),
     "type": type?.toJson(),
     "subType": subType?.toJson(),
     "family": family,
   };
+
 }
 
 class Genre {
@@ -238,46 +250,83 @@ class Genre {
     required this.name,
   });
 
-  String id;
-  String name;
+  final String? id;
+  final String? name;
 
-  factory Genre.fromJson(Map<String, dynamic> json) => Genre(
-    id: json["id"],
-    name: json["name"],
-  );
+  factory Genre.fromJson(Map<String, dynamic> json){
+    return Genre(
+      id: json["id"],
+      name: json["name"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "name": name,
   };
+
 }
 
 class Dates {
   Dates({
     required this.start,
-    this.timezone,
+    required this.timezone,
     required this.status,
     required this.spanMultipleDays,
+    required this.access,
   });
 
-  Start start;
-  String? timezone;
-  Status status;
-  bool spanMultipleDays;
+  final Start? start;
+  final String? timezone;
+  final Status? status;
+  final bool? spanMultipleDays;
+  final Access? access;
 
-  factory Dates.fromJson(Map<String, dynamic> json) => Dates(
-    start: Start.fromJson(json["start"]),
-    timezone: json["timezone"],
-    status: Status.fromJson(json["status"]),
-    spanMultipleDays: json["spanMultipleDays"],
-  );
+  factory Dates.fromJson(Map<String, dynamic> json){
+    return Dates(
+      start: json["start"] == null ? null : Start.fromJson(json["start"]),
+      timezone: json["timezone"],
+      status: json["status"] == null ? null : Status.fromJson(json["status"]),
+      spanMultipleDays: json["spanMultipleDays"],
+      access: json["access"] == null ? null : Access.fromJson(json["access"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "start": start.toJson(),
+    "start": start?.toJson(),
     "timezone": timezone,
-    "status": status.toJson(),
+    "status": status?.toJson(),
     "spanMultipleDays": spanMultipleDays,
+    "access": access?.toJson(),
   };
+
+}
+
+class Access {
+  Access({
+    required this.startDateTime,
+    required this.startApproximate,
+    required this.endApproximate,
+  });
+
+  final DateTime? startDateTime;
+  final bool? startApproximate;
+  final bool? endApproximate;
+
+  factory Access.fromJson(Map<String, dynamic> json){
+    return Access(
+      startDateTime: json["startDateTime"] == null ? null : DateTime.parse(json["startDateTime"]),
+      startApproximate: json["startApproximate"],
+      endApproximate: json["endApproximate"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "startDateTime": startDateTime?.toIso8601String(),
+    "startApproximate": startApproximate,
+    "endApproximate": endApproximate,
+  };
+
 }
 
 class Start {
@@ -291,33 +340,35 @@ class Start {
     required this.noSpecificTime,
   });
 
-  DateTime localDate;
-  String localTime;
-  DateTime dateTime;
-  bool dateTbd;
-  bool dateTba;
-  bool timeTba;
-  bool noSpecificTime;
+  final DateTime? localDate;
+  final String? localTime;
+  final DateTime? dateTime;
+  final bool? dateTbd;
+  final bool? dateTba;
+  final bool? timeTba;
+  final bool? noSpecificTime;
 
-  factory Start.fromJson(Map<String, dynamic> json) => Start(
-    localDate: DateTime.parse(json["localDate"]),
-    localTime: json["localTime"],
-    dateTime: DateTime.parse(json["dateTime"]),
-    dateTbd: json["dateTBD"],
-    dateTba: json["dateTBA"],
-    timeTba: json["timeTBA"],
-    noSpecificTime: json["noSpecificTime"],
-  );
+  factory Start.fromJson(Map<String, dynamic> json){
+    return Start(
+      localDate: json["localDate"] == null ? null : DateTime.parse(json["localDate"]),
+      localTime: json["localTime"],
+      dateTime: json["dateTime"] == null ? null : DateTime.parse(json["dateTime"]),
+      dateTbd: json["dateTBD"],
+      dateTba: json["dateTBA"],
+      timeTba: json["timeTBA"],
+      noSpecificTime: json["noSpecificTime"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "localDate": "${localDate.year.toString().padLeft(4, '0')}-${localDate.month.toString().padLeft(2, '0')}-${localDate.day.toString().padLeft(2, '0')}",
     "localTime": localTime,
-    "dateTime": dateTime.toIso8601String(),
+    "dateTime": dateTime?.toIso8601String(),
     "dateTBD": dateTbd,
     "dateTBA": dateTba,
     "timeTBA": timeTba,
     "noSpecificTime": noSpecificTime,
   };
+
 }
 
 class Status {
@@ -325,22 +376,45 @@ class Status {
     required this.code,
   });
 
-  Code code;
+  final String? code;
 
-  factory Status.fromJson(Map<String, dynamic> json) => Status(
-    code: codeValues.map[json["code"]]!,
-  );
+  factory Status.fromJson(Map<String, dynamic> json){
+    return Status(
+      code: json["code"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "code": codeValues.reverse[code],
+    "code": code,
   };
+
 }
 
-enum Code { ONSALE }
+class DoorsTimes {
+  DoorsTimes({
+    required this.localDate,
+    required this.localTime,
+    required this.dateTime,
+  });
 
-final codeValues = EnumValues({
-  "onsale": Code.ONSALE
-});
+  final DateTime? localDate;
+  final String? localTime;
+  final DateTime? dateTime;
+
+  factory DoorsTimes.fromJson(Map<String, dynamic> json){
+    return DoorsTimes(
+      localDate: json["localDate"] == null ? null : DateTime.parse(json["localDate"]),
+      localTime: json["localTime"],
+      dateTime: json["dateTime"] == null ? null : DateTime.parse(json["dateTime"]),
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "localTime": localTime,
+    "dateTime": dateTime?.toIso8601String(),
+  };
+
+}
 
 class EventEmbedded {
   EventEmbedded({
@@ -348,18 +422,21 @@ class EventEmbedded {
     required this.attractions,
   });
 
-  List<Venue> venues;
-  List<Attraction> attractions;
+  final List<Venue> venues;
+  final List<Attraction> attractions;
 
-  factory EventEmbedded.fromJson(Map<String, dynamic> json) => EventEmbedded(
-    venues: List<Venue>.from(json["venues"].map((x) => Venue.fromJson(x))),
-    attractions: List<Attraction>.from(json["attractions"].map((x) => Attraction.fromJson(x))),
-  );
+  factory EventEmbedded.fromJson(Map<String, dynamic> json){
+    return EventEmbedded(
+      venues: json["venues"] == null ? [] : List<Venue>.from(json["venues"]!.map((x) => Venue.fromJson(x))),
+      attractions: json["attractions"] == null ? [] : List<Attraction>.from(json["attractions"]!.map((x) => Attraction.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "venues": List<dynamic>.from(venues.map((x) => x.toJson())),
-    "attractions": List<dynamic>.from(attractions.map((x) => x.toJson())),
+    "venues": venues.map((x) => x?.toJson()).toList(),
+    "attractions": attractions.map((x) => x?.toJson()).toList(),
   };
+
 }
 
 class Attraction {
@@ -370,104 +447,116 @@ class Attraction {
     required this.test,
     required this.url,
     required this.locale,
-    required this.externalLinks,
     required this.images,
     required this.classifications,
     required this.upcomingEvents,
     required this.links,
-    this.aliases,
+    required this.externalLinks,
   });
 
-  String name;
-  AttractionType type;
-  String id;
-  bool test;
-  String url;
-  Locale locale;
-  ExternalLinks externalLinks;
-  List<Image> images;
-  List<Classification> classifications;
-  UpcomingEvents upcomingEvents;
-  AttractionLinks links;
-  List<String>? aliases;
+  final String? name;
+  final String? type;
+  final String? id;
+  final bool? test;
+  final String? url;
+  final String? locale;
+  final List<Image> images;
+  final List<Classification> classifications;
+  final UpcomingEvents? upcomingEvents;
+  final AttractionLinks? links;
+  final ExternalLinks? externalLinks;
 
-  factory Attraction.fromJson(Map<String, dynamic> json) => Attraction(
-    name: json["name"],
-    type: attractionTypeValues.map[json["type"]]!,
-    id: json["id"],
-    test: json["test"],
-    url: json["url"],
-    locale: localeValues.map[json["locale"]]!,
-    externalLinks: ExternalLinks.fromJson(json["externalLinks"]),
-    images: List<Image>.from(json["images"].map((x) => Image.fromJson(x))),
-    classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
-    upcomingEvents: UpcomingEvents.fromJson(json["upcomingEvents"]),
-    links: AttractionLinks.fromJson(json["_links"]),
-    aliases: json["aliases"] == null ? [] : List<String>.from(json["aliases"]!.map((x) => x)),
-  );
+  factory Attraction.fromJson(Map<String, dynamic> json){
+    return Attraction(
+      name: json["name"],
+      type: json["type"],
+      id: json["id"],
+      test: json["test"],
+      url: json["url"],
+      locale: json["locale"],
+      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      classifications: json["classifications"] == null ? [] : List<Classification>.from(json["classifications"]!.map((x) => Classification.fromJson(x))),
+      upcomingEvents: json["upcomingEvents"] == null ? null : UpcomingEvents.fromJson(json["upcomingEvents"]),
+      links: json["_links"] == null ? null : AttractionLinks.fromJson(json["_links"]),
+      externalLinks: json["externalLinks"] == null ? null : ExternalLinks.fromJson(json["externalLinks"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "type": attractionTypeValues.reverse[type],
+    "type": type,
     "id": id,
     "test": test,
     "url": url,
-    "locale": localeValues.reverse[locale],
-    "externalLinks": externalLinks.toJson(),
-    "images": List<dynamic>.from(images.map((x) => x.toJson())),
-    "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
-    "upcomingEvents": upcomingEvents.toJson(),
-    "_links": links.toJson(),
-    "aliases": aliases == null ? [] : List<dynamic>.from(aliases!.map((x) => x)),
+    "locale": locale,
+    "images": images.map((x) => x?.toJson()).toList(),
+    "classifications": classifications.map((x) => x?.toJson()).toList(),
+    "upcomingEvents": upcomingEvents?.toJson(),
+    "_links": links?.toJson(),
+    "externalLinks": externalLinks?.toJson(),
   };
+
 }
 
 class ExternalLinks {
   ExternalLinks({
-    required this.twitter,
-    required this.wiki,
-    required this.facebook,
-    required this.instagram,
+    required this.musicbrainz,
     required this.homepage,
   });
 
-  List<Facebook> twitter;
-  List<Facebook> wiki;
-  List<Facebook> facebook;
-  List<Facebook> instagram;
-  List<Facebook> homepage;
+  final List<Musicbrainz> musicbrainz;
+  final List<Homepage> homepage;
 
-  factory ExternalLinks.fromJson(Map<String, dynamic> json) => ExternalLinks(
-    twitter: List<Facebook>.from(json["twitter"].map((x) => Facebook.fromJson(x))),
-    wiki: List<Facebook>.from(json["wiki"].map((x) => Facebook.fromJson(x))),
-    facebook: List<Facebook>.from(json["facebook"].map((x) => Facebook.fromJson(x))),
-    instagram: List<Facebook>.from(json["instagram"].map((x) => Facebook.fromJson(x))),
-    homepage: List<Facebook>.from(json["homepage"].map((x) => Facebook.fromJson(x))),
-  );
+  factory ExternalLinks.fromJson(Map<String, dynamic> json){
+    return ExternalLinks(
+      musicbrainz: json["musicbrainz"] == null ? [] : List<Musicbrainz>.from(json["musicbrainz"]!.map((x) => Musicbrainz.fromJson(x))),
+      homepage: json["homepage"] == null ? [] : List<Homepage>.from(json["homepage"]!.map((x) => Homepage.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "twitter": List<dynamic>.from(twitter.map((x) => x.toJson())),
-    "wiki": List<dynamic>.from(wiki.map((x) => x.toJson())),
-    "facebook": List<dynamic>.from(facebook.map((x) => x.toJson())),
-    "instagram": List<dynamic>.from(instagram.map((x) => x.toJson())),
-    "homepage": List<dynamic>.from(homepage.map((x) => x.toJson())),
+    "musicbrainz": musicbrainz.map((x) => x?.toJson()).toList(),
+    "homepage": homepage.map((x) => x?.toJson()).toList(),
   };
+
 }
 
-class Facebook {
-  Facebook({
+class Homepage {
+  Homepage({
     required this.url,
   });
 
-  String url;
+  final String? url;
 
-  factory Facebook.fromJson(Map<String, dynamic> json) => Facebook(
-    url: json["url"],
-  );
+  factory Homepage.fromJson(Map<String, dynamic> json){
+    return Homepage(
+      url: json["url"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "url": url,
   };
+
+}
+
+class Musicbrainz {
+  Musicbrainz({
+    required this.id,
+  });
+
+  final String? id;
+
+  factory Musicbrainz.fromJson(Map<String, dynamic> json){
+    return Musicbrainz(
+      id: json["id"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+  };
+
 }
 
 class Image {
@@ -477,57 +566,55 @@ class Image {
     required this.width,
     required this.height,
     required this.fallback,
-    this.attribution,
+    required this.attribution,
   });
 
-  Ratio ratio;
-  String url;
-  int width;
-  int height;
-  bool fallback;
-  String? attribution;
+  final String? ratio;
+  final String? url;
+  final int? width;
+  final int? height;
+  final bool? fallback;
+  final String? attribution;
 
-  factory Image.fromJson(Map<String, dynamic> json) => Image(
-    ratio: ratioValues.map[json["ratio"]]!,
-    url: json["url"],
-    width: json["width"],
-    height: json["height"],
-    fallback: json["fallback"],
-    attribution: json["attribution"],
-  );
+  factory Image.fromJson(Map<String, dynamic> json){
+    return Image(
+      ratio: json["ratio"],
+      url: json["url"],
+      width: json["width"],
+      height: json["height"],
+      fallback: json["fallback"],
+      attribution: json["attribution"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "ratio": ratioValues.reverse[ratio],
+    "ratio": ratio,
     "url": url,
     "width": width,
     "height": height,
     "fallback": fallback,
     "attribution": attribution,
   };
+
 }
-
-enum Ratio { THE_169, THE_32, THE_43 }
-
-final ratioValues = EnumValues({
-  "16_9": Ratio.THE_169,
-  "3_2": Ratio.THE_32,
-  "4_3": Ratio.THE_43
-});
 
 class AttractionLinks {
   AttractionLinks({
     required this.self,
   });
 
-  First self;
+  final First? self;
 
-  factory AttractionLinks.fromJson(Map<String, dynamic> json) => AttractionLinks(
-    self: First.fromJson(json["self"]),
-  );
+  factory AttractionLinks.fromJson(Map<String, dynamic> json){
+    return AttractionLinks(
+      self: json["self"] == null ? null : First.fromJson(json["self"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "self": self.toJson(),
+    "self": self?.toJson(),
   };
+
 }
 
 class First {
@@ -535,55 +622,53 @@ class First {
     required this.href,
   });
 
-  String href;
+  final String? href;
 
-  factory First.fromJson(Map<String, dynamic> json) => First(
-    href: json["href"],
-  );
+  factory First.fromJson(Map<String, dynamic> json){
+    return First(
+      href: json["href"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "href": href,
   };
+
 }
-
-enum Locale { EN_US }
-
-final localeValues = EnumValues({
-  "en-us": Locale.EN_US
-});
-
-enum AttractionType { ATTRACTION }
-
-final attractionTypeValues = EnumValues({
-  "attraction": AttractionType.ATTRACTION
-});
 
 class UpcomingEvents {
   UpcomingEvents({
     required this.total,
-    this.tmr,
     required this.ticketmaster,
     required this.filtered,
+    required this.mfxCh,
+    required this.tmr,
   });
 
-  int total;
-  int? tmr;
-  int ticketmaster;
-  int filtered;
+  final int? total;
+  final int? ticketmaster;
+  final int? filtered;
+  final int? mfxCh;
+  final int? tmr;
 
-  factory UpcomingEvents.fromJson(Map<String, dynamic> json) => UpcomingEvents(
-    total: json["_total"],
-    tmr: json["tmr"],
-    ticketmaster: json["ticketmaster"],
-    filtered: json["_filtered"],
-  );
+  factory UpcomingEvents.fromJson(Map<String, dynamic> json){
+    return UpcomingEvents(
+      total: json["_total"],
+      ticketmaster: json["ticketmaster"],
+      filtered: json["_filtered"],
+      mfxCh: json["mfx-ch"],
+      tmr: json["tmr"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "_total": total,
-    "tmr": tmr,
     "ticketmaster": ticketmaster,
     "_filtered": filtered,
+    "mfx-ch": mfxCh,
+    "tmr": tmr,
   };
+
 }
 
 class Venue {
@@ -592,106 +677,132 @@ class Venue {
     required this.type,
     required this.id,
     required this.test,
-    this.url,
+    required this.url,
     required this.locale,
-    required this.postalCode,
     required this.timezone,
     required this.city,
-    required this.state,
     required this.country,
     required this.address,
     required this.location,
-    this.markets,
+    required this.markets,
     required this.dmas,
-    this.boxOfficeInfo,
-    this.parkingDetail,
-    this.accessibleSeatingDetail,
-    this.generalInfo,
     required this.upcomingEvents,
+    required this.ada,
     required this.links,
-    this.images,
-    this.aliases,
-    this.social,
+    required this.postalCode,
+    required this.state,
+    required this.boxOfficeInfo,
+    required this.parkingDetail,
+    required this.accessibleSeatingDetail,
+    required this.generalInfo,
+    required this.images,
   });
 
-  String name;
-  VenueType type;
-  String id;
-  bool test;
-  String? url;
-  Locale locale;
-  String postalCode;
-  String timezone;
-  City city;
-  State state;
-  Country country;
-  Address address;
-  Location location;
-  List<Genre>? markets;
-  List<Dma> dmas;
-  BoxOfficeInfo? boxOfficeInfo;
-  String? parkingDetail;
-  String? accessibleSeatingDetail;
-  GeneralInfo? generalInfo;
-  UpcomingEvents upcomingEvents;
-  AttractionLinks links;
-  List<Image>? images;
-  List<String>? aliases;
-  Social? social;
+  final String? name;
+  final String? type;
+  final String? id;
+  final bool? test;
+  final String? url;
+  final String? locale;
+  final String? timezone;
+  final City? city;
+  final Country? country;
+  final Address? address;
+  final Location? location;
+  final List<Genre> markets;
+  final List<Dma> dmas;
+  final UpcomingEvents? upcomingEvents;
+  final Ada? ada;
+  final AttractionLinks? links;
+  final String? postalCode;
+  final StateVar? state;
+  final BoxOfficeInfo? boxOfficeInfo;
+  final String? parkingDetail;
+  final String? accessibleSeatingDetail;
+  final GeneralInfo? generalInfo;
+  final List<Image> images;
 
-  factory Venue.fromJson(Map<String, dynamic> json) => Venue(
-    name: json["name"],
-    type: venueTypeValues.map[json["type"]]!,
-    id: json["id"],
-    test: json["test"],
-    url: json["url"],
-    locale: localeValues.map[json["locale"]]!,
-    postalCode: json["postalCode"],
-    timezone: json["timezone"],
-    city: City.fromJson(json["city"]),
-    state: State.fromJson(json["state"]),
-    country: Country.fromJson(json["country"]),
-    address: Address.fromJson(json["address"]),
-    location: Location.fromJson(json["location"]),
-    markets: json["markets"] == null ? [] : List<Genre>.from(json["markets"]!.map((x) => Genre.fromJson(x))),
-    dmas: List<Dma>.from(json["dmas"].map((x) => Dma.fromJson(x))),
-    boxOfficeInfo: json["boxOfficeInfo"] == null ? null : BoxOfficeInfo.fromJson(json["boxOfficeInfo"]),
-    parkingDetail: json["parkingDetail"],
-    accessibleSeatingDetail: json["accessibleSeatingDetail"],
-    generalInfo: json["generalInfo"] == null ? null : GeneralInfo.fromJson(json["generalInfo"]),
-    upcomingEvents: UpcomingEvents.fromJson(json["upcomingEvents"]),
-    links: AttractionLinks.fromJson(json["_links"]),
-    images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
-    aliases: json["aliases"] == null ? [] : List<String>.from(json["aliases"]!.map((x) => x)),
-    social: json["social"] == null ? null : Social.fromJson(json["social"]),
-  );
+  factory Venue.fromJson(Map<String, dynamic> json){
+    return Venue(
+      name: json["name"],
+      type: json["type"],
+      id: json["id"],
+      test: json["test"],
+      url: json["url"],
+      locale: json["locale"],
+      timezone: json["timezone"],
+      city: json["city"] == null ? null : City.fromJson(json["city"]),
+      country: json["country"] == null ? null : Country.fromJson(json["country"]),
+      address: json["address"] == null ? null : Address.fromJson(json["address"]),
+      location: json["location"] == null ? null : Location.fromJson(json["location"]),
+      markets: json["markets"] == null ? [] : List<Genre>.from(json["markets"]!.map((x) => Genre.fromJson(x))),
+      dmas: json["dmas"] == null ? [] : List<Dma>.from(json["dmas"]!.map((x) => Dma.fromJson(x))),
+      upcomingEvents: json["upcomingEvents"] == null ? null : UpcomingEvents.fromJson(json["upcomingEvents"]),
+      ada: json["ada"] == null ? null : Ada.fromJson(json["ada"]),
+      links: json["_links"] == null ? null : AttractionLinks.fromJson(json["_links"]),
+      postalCode: json["postalCode"],
+      state: json["state"] == null ? null : StateVar.fromJson(json["state"]),
+      boxOfficeInfo: json["boxOfficeInfo"] == null ? null : BoxOfficeInfo.fromJson(json["boxOfficeInfo"]),
+      parkingDetail: json["parkingDetail"],
+      accessibleSeatingDetail: json["accessibleSeatingDetail"],
+      generalInfo: json["generalInfo"] == null ? null : GeneralInfo.fromJson(json["generalInfo"]),
+      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
-    "type": venueTypeValues.reverse[type],
+    "type": type,
     "id": id,
     "test": test,
     "url": url,
-    "locale": localeValues.reverse[locale],
-    "postalCode": postalCode,
+    "locale": locale,
     "timezone": timezone,
-    "city": city.toJson(),
-    "state": state.toJson(),
-    "country": country.toJson(),
-    "address": address.toJson(),
-    "location": location.toJson(),
-    "markets": markets == null ? [] : List<dynamic>.from(markets!.map((x) => x.toJson())),
-    "dmas": List<dynamic>.from(dmas.map((x) => x.toJson())),
+    "city": city?.toJson(),
+    "country": country?.toJson(),
+    "address": address?.toJson(),
+    "location": location?.toJson(),
+    "markets": markets.map((x) => x?.toJson()).toList(),
+    "dmas": dmas.map((x) => x?.toJson()).toList(),
+    "upcomingEvents": upcomingEvents?.toJson(),
+    "ada": ada?.toJson(),
+    "_links": links?.toJson(),
+    "postalCode": postalCode,
+    "state": state?.toJson(),
     "boxOfficeInfo": boxOfficeInfo?.toJson(),
     "parkingDetail": parkingDetail,
     "accessibleSeatingDetail": accessibleSeatingDetail,
     "generalInfo": generalInfo?.toJson(),
-    "upcomingEvents": upcomingEvents.toJson(),
-    "_links": links.toJson(),
-    "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x.toJson())),
-    "aliases": aliases == null ? [] : List<dynamic>.from(aliases!.map((x) => x)),
-    "social": social?.toJson(),
+    "images": images.map((x) => x?.toJson()).toList(),
   };
+
+}
+
+class Ada {
+  Ada({
+    required this.adaPhones,
+    required this.adaCustomCopy,
+    required this.adaHours,
+  });
+
+  final String? adaPhones;
+  final String? adaCustomCopy;
+  final String? adaHours;
+
+  factory Ada.fromJson(Map<String, dynamic> json){
+    return Ada(
+      adaPhones: json["adaPhones"],
+      adaCustomCopy: json["adaCustomCopy"],
+      adaHours: json["adaHours"],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+    "adaPhones": adaPhones,
+    "adaCustomCopy": adaCustomCopy,
+    "adaHours": adaHours,
+  };
+
 }
 
 class Address {
@@ -699,43 +810,49 @@ class Address {
     required this.line1,
   });
 
-  String line1;
+  final String? line1;
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-    line1: json["line1"],
-  );
+  factory Address.fromJson(Map<String, dynamic> json){
+    return Address(
+      line1: json["line1"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "line1": line1,
   };
+
 }
 
 class BoxOfficeInfo {
   BoxOfficeInfo({
     required this.phoneNumberDetail,
+    required this.acceptedPaymentDetail,
+    required this.willCallDetail,
     required this.openHoursDetail,
-    this.willCallDetail,
-    this.acceptedPaymentDetail,
   });
 
-  String phoneNumberDetail;
-  String openHoursDetail;
-  String? willCallDetail;
-  String? acceptedPaymentDetail;
+  final String? phoneNumberDetail;
+  final String? acceptedPaymentDetail;
+  final String? willCallDetail;
+  final String? openHoursDetail;
 
-  factory BoxOfficeInfo.fromJson(Map<String, dynamic> json) => BoxOfficeInfo(
-    phoneNumberDetail: json["phoneNumberDetail"],
-    openHoursDetail: json["openHoursDetail"],
-    willCallDetail: json["willCallDetail"],
-    acceptedPaymentDetail: json["acceptedPaymentDetail"],
-  );
+  factory BoxOfficeInfo.fromJson(Map<String, dynamic> json){
+    return BoxOfficeInfo(
+      phoneNumberDetail: json["phoneNumberDetail"],
+      acceptedPaymentDetail: json["acceptedPaymentDetail"],
+      willCallDetail: json["willCallDetail"],
+      openHoursDetail: json["openHoursDetail"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "phoneNumberDetail": phoneNumberDetail,
-    "openHoursDetail": openHoursDetail,
-    "willCallDetail": willCallDetail,
     "acceptedPaymentDetail": acceptedPaymentDetail,
+    "willCallDetail": willCallDetail,
+    "openHoursDetail": openHoursDetail,
   };
+
 }
 
 class City {
@@ -743,15 +860,18 @@ class City {
     required this.name,
   });
 
-  String name;
+  final String? name;
 
-  factory City.fromJson(Map<String, dynamic> json) => City(
-    name: json["name"],
-  );
+  factory City.fromJson(Map<String, dynamic> json){
+    return City(
+      name: json["name"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
   };
+
 }
 
 class Country {
@@ -760,66 +880,63 @@ class Country {
     required this.countryCode,
   });
 
-  CountryName name;
-  CountryCode countryCode;
+  final String? name;
+  final String? countryCode;
 
-  factory Country.fromJson(Map<String, dynamic> json) => Country(
-    name: countryNameValues.map[json["name"]]!,
-    countryCode: countryCodeValues.map[json["countryCode"]]!,
-  );
+  factory Country.fromJson(Map<String, dynamic> json){
+    return Country(
+      name: json["name"],
+      countryCode: json["countryCode"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "name": countryNameValues.reverse[name],
-    "countryCode": countryCodeValues.reverse[countryCode],
+    "name": name,
+    "countryCode": countryCode,
   };
+
 }
-
-enum CountryCode { US }
-
-final countryCodeValues = EnumValues({
-  "US": CountryCode.US
-});
-
-enum CountryName { UNITED_STATES_OF_AMERICA }
-
-final countryNameValues = EnumValues({
-  "United States Of America": CountryName.UNITED_STATES_OF_AMERICA
-});
 
 class Dma {
   Dma({
     required this.id,
   });
 
-  int id;
+  final int? id;
 
-  factory Dma.fromJson(Map<String, dynamic> json) => Dma(
-    id: json["id"],
-  );
+  factory Dma.fromJson(Map<String, dynamic> json){
+    return Dma(
+      id: json["id"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
   };
+
 }
 
 class GeneralInfo {
   GeneralInfo({
     required this.childRule,
-    this.generalRule,
+    required this.generalRule,
   });
 
-  String childRule;
-  String? generalRule;
+  final String? childRule;
+  final String? generalRule;
 
-  factory GeneralInfo.fromJson(Map<String, dynamic> json) => GeneralInfo(
-    childRule: json["childRule"],
-    generalRule: json["generalRule"],
-  );
+  factory GeneralInfo.fromJson(Map<String, dynamic> json){
+    return GeneralInfo(
+      childRule: json["childRule"],
+      generalRule: json["generalRule"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "childRule": childRule,
     "generalRule": generalRule,
   };
+
 }
 
 class Location {
@@ -828,77 +945,45 @@ class Location {
     required this.latitude,
   });
 
-  String longitude;
-  String latitude;
+  final String? longitude;
+  final String? latitude;
 
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
-    longitude: json["longitude"],
-    latitude: json["latitude"],
-  );
+  factory Location.fromJson(Map<String, dynamic> json){
+    return Location(
+      longitude: json["longitude"],
+      latitude: json["latitude"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "longitude": longitude,
     "latitude": latitude,
   };
+
 }
 
-class Social {
-  Social({
-    required this.twitter,
-  });
-
-  Twitter twitter;
-
-  factory Social.fromJson(Map<String, dynamic> json) => Social(
-    twitter: Twitter.fromJson(json["twitter"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "twitter": twitter.toJson(),
-  };
-}
-
-class Twitter {
-  Twitter({
-    required this.handle,
-  });
-
-  String handle;
-
-  factory Twitter.fromJson(Map<String, dynamic> json) => Twitter(
-    handle: json["handle"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "handle": handle,
-  };
-}
-
-class State {
-  State({
+class StateVar {
+  StateVar({
     required this.name,
     required this.stateCode,
   });
 
-  String name;
-  String stateCode;
+  final String? name;
+  final String? stateCode;
 
-  factory State.fromJson(Map<String, dynamic> json) => State(
-    name: json["name"],
-    stateCode: json["stateCode"],
-  );
+  factory StateVar.fromJson(Map<String, dynamic> json){
+    return StateVar(
+      name: json["name"],
+      stateCode: json["stateCode"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "name": name,
     "stateCode": stateCode,
   };
+
 }
-
-enum VenueType { VENUE }
-
-final venueTypeValues = EnumValues({
-  "venue": VenueType.VENUE
-});
 
 class EventLinks {
   EventLinks({
@@ -907,21 +992,24 @@ class EventLinks {
     required this.venues,
   });
 
-  First self;
-  List<First> attractions;
-  List<First> venues;
+  final First? self;
+  final List<First> attractions;
+  final List<First> venues;
 
-  factory EventLinks.fromJson(Map<String, dynamic> json) => EventLinks(
-    self: First.fromJson(json["self"]),
-    attractions: List<First>.from(json["attractions"].map((x) => First.fromJson(x))),
-    venues: List<First>.from(json["venues"].map((x) => First.fromJson(x))),
-  );
+  factory EventLinks.fromJson(Map<String, dynamic> json){
+    return EventLinks(
+      self: json["self"] == null ? null : First.fromJson(json["self"]),
+      attractions: json["attractions"] == null ? [] : List<First>.from(json["attractions"]!.map((x) => First.fromJson(x))),
+      venues: json["venues"] == null ? [] : List<First>.from(json["venues"]!.map((x) => First.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "self": self.toJson(),
-    "attractions": List<dynamic>.from(attractions.map((x) => x.toJson())),
-    "venues": List<dynamic>.from(venues.map((x) => x.toJson())),
+    "self": self?.toJson(),
+    "attractions": attractions.map((x) => x?.toJson()).toList(),
+    "venues": venues.map((x) => x?.toJson()).toList(),
   };
+
 }
 
 class Outlet {
@@ -930,18 +1018,21 @@ class Outlet {
     required this.type,
   });
 
-  String url;
-  String type;
+  final String? url;
+  final String? type;
 
-  factory Outlet.fromJson(Map<String, dynamic> json) => Outlet(
-    url: json["url"],
-    type: json["type"],
-  );
+  factory Outlet.fromJson(Map<String, dynamic> json){
+    return Outlet(
+      url: json["url"],
+      type: json["type"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "url": url,
     "type": type,
   };
+
 }
 
 class PriceRange {
@@ -952,77 +1043,28 @@ class PriceRange {
     required this.max,
   });
 
-  PriceRangeType type;
-  Currency currency;
-  double min;
-  int max;
+  final String? type;
+  final String? currency;
+  final double? min;
+  final double? max;
 
-  factory PriceRange.fromJson(Map<String, dynamic> json) => PriceRange(
-    type: priceRangeTypeValues.map[json["type"]]!,
-    currency: currencyValues.map[json["currency"]]!,
-    min: json["min"]?.toDouble(),
-    max: json["max"],
-  );
+  factory PriceRange.fromJson(Map<String, dynamic> json){
+    return PriceRange(
+      type: json["type"],
+      currency: json["currency"],
+      min: json["min"],
+      max: json["max"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "type": priceRangeTypeValues.reverse[type],
-    "currency": currencyValues.reverse[currency],
+    "type": type,
+    "currency": currency,
     "min": min,
     "max": max,
   };
+
 }
-
-enum Currency { USD }
-
-final currencyValues = EnumValues({
-  "USD": Currency.USD
-});
-
-enum PriceRangeType { STANDARD }
-
-final priceRangeTypeValues = EnumValues({
-  "standard": PriceRangeType.STANDARD
-});
-
-class Product {
-  Product({
-    required this.name,
-    required this.id,
-    required this.url,
-    required this.type,
-    required this.classifications,
-  });
-
-  String name;
-  String id;
-  String url;
-  ProductType type;
-  List<Classification> classifications;
-
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-    name: json["name"],
-    id: json["id"],
-    url: json["url"],
-    type: productTypeValues.map[json["type"]]!,
-    classifications: List<Classification>.from(json["classifications"].map((x) => Classification.fromJson(x))),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "name": name,
-    "id": id,
-    "url": url,
-    "type": productTypeValues.reverse[type],
-    "classifications": List<dynamic>.from(classifications.map((x) => x.toJson())),
-  };
-}
-
-enum ProductType { PARKING, SPECIAL_ENTRY, UPSELL }
-
-final productTypeValues = EnumValues({
-  "Parking": ProductType.PARKING,
-  "Special Entry": ProductType.SPECIAL_ENTRY,
-  "Upsell": ProductType.UPSELL
-});
 
 class Promoter {
   Promoter({
@@ -1031,53 +1073,47 @@ class Promoter {
     required this.description,
   });
 
-  String id;
-  PromoterName name;
-  Description description;
+  final String? id;
+  final String? name;
+  final String? description;
 
-  factory Promoter.fromJson(Map<String, dynamic> json) => Promoter(
-    id: json["id"],
-    name: promoterNameValues.map[json["name"]]!,
-    description: descriptionValues.map[json["description"]]!,
-  );
+  factory Promoter.fromJson(Map<String, dynamic> json){
+    return Promoter(
+      id: json["id"],
+      name: json["name"],
+      description: json["description"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "name": promoterNameValues.reverse[name],
-    "description": descriptionValues.reverse[description],
+    "name": name,
+    "description": description,
   };
+
 }
-
-enum Description { NBA_REGULAR_SEASON_NTL_USA }
-
-final descriptionValues = EnumValues({
-  "NBA REGULAR SEASON / NTL / USA": Description.NBA_REGULAR_SEASON_NTL_USA
-});
-
-enum PromoterName { NBA_REGULAR_SEASON }
-
-final promoterNameValues = EnumValues({
-  "NBA REGULAR SEASON": PromoterName.NBA_REGULAR_SEASON
-});
 
 class Sales {
   Sales({
     required this.public,
-    this.presales,
+    required this.presales,
   });
 
-  Public public;
-  List<Presale>? presales;
+  final Public? public;
+  final List<Presale> presales;
 
-  factory Sales.fromJson(Map<String, dynamic> json) => Sales(
-    public: Public.fromJson(json["public"]),
-    presales: json["presales"] == null ? [] : List<Presale>.from(json["presales"]!.map((x) => Presale.fromJson(x))),
-  );
+  factory Sales.fromJson(Map<String, dynamic> json){
+    return Sales(
+      public: json["public"] == null ? null : Public.fromJson(json["public"]),
+      presales: json["presales"] == null ? [] : List<Presale>.from(json["presales"]!.map((x) => Presale.fromJson(x))),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "public": public.toJson(),
-    "presales": presales == null ? [] : List<dynamic>.from(presales!.map((x) => x.toJson())),
+    "public": public?.toJson(),
+    "presales": presales.map((x) => x?.toJson()).toList(),
   };
+
 }
 
 class Presale {
@@ -1085,27 +1121,26 @@ class Presale {
     required this.startDateTime,
     required this.endDateTime,
     required this.name,
-    this.description,
   });
 
-  DateTime startDateTime;
-  DateTime endDateTime;
-  String name;
-  String? description;
+  final DateTime? startDateTime;
+  final DateTime? endDateTime;
+  final String? name;
 
-  factory Presale.fromJson(Map<String, dynamic> json) => Presale(
-    startDateTime: DateTime.parse(json["startDateTime"]),
-    endDateTime: DateTime.parse(json["endDateTime"]),
-    name: json["name"],
-    description: json["description"],
-  );
+  factory Presale.fromJson(Map<String, dynamic> json){
+    return Presale(
+      startDateTime: json["startDateTime"] == null ? null : DateTime.parse(json["startDateTime"]),
+      endDateTime: json["endDateTime"] == null ? null : DateTime.parse(json["endDateTime"]),
+      name: json["name"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "startDateTime": startDateTime.toIso8601String(),
-    "endDateTime": endDateTime.toIso8601String(),
+    "startDateTime": startDateTime?.toIso8601String(),
+    "endDateTime": endDateTime?.toIso8601String(),
     "name": name,
-    "description": description,
   };
+
 }
 
 class Public {
@@ -1116,24 +1151,27 @@ class Public {
     required this.endDateTime,
   });
 
-  DateTime startDateTime;
-  bool startTbd;
-  bool startTba;
-  DateTime endDateTime;
+  final DateTime? startDateTime;
+  final bool? startTbd;
+  final bool? startTba;
+  final DateTime? endDateTime;
 
-  factory Public.fromJson(Map<String, dynamic> json) => Public(
-    startDateTime: DateTime.parse(json["startDateTime"]),
-    startTbd: json["startTBD"],
-    startTba: json["startTBA"],
-    endDateTime: DateTime.parse(json["endDateTime"]),
-  );
+  factory Public.fromJson(Map<String, dynamic> json){
+    return Public(
+      startDateTime: json["startDateTime"] == null ? null : DateTime.parse(json["startDateTime"]),
+      startTbd: json["startTBD"],
+      startTba: json["startTBA"],
+      endDateTime: json["endDateTime"] == null ? null : DateTime.parse(json["endDateTime"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "startDateTime": startDateTime.toIso8601String(),
+    "startDateTime": startDateTime?.toIso8601String(),
     "startTBD": startTbd,
     "startTBA": startTba,
-    "endDateTime": endDateTime.toIso8601String(),
+    "endDateTime": endDateTime?.toIso8601String(),
   };
+
 }
 
 class Seatmap {
@@ -1141,15 +1179,18 @@ class Seatmap {
     required this.staticUrl,
   });
 
-  String staticUrl;
+  final String? staticUrl;
 
-  factory Seatmap.fromJson(Map<String, dynamic> json) => Seatmap(
-    staticUrl: json["staticUrl"],
-  );
+  factory Seatmap.fromJson(Map<String, dynamic> json){
+    return Seatmap(
+      staticUrl: json["staticUrl"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "staticUrl": staticUrl,
   };
+
 }
 
 class TicketLimit {
@@ -1157,15 +1198,18 @@ class TicketLimit {
     required this.info,
   });
 
-  String info;
+  final String? info;
 
-  factory TicketLimit.fromJson(Map<String, dynamic> json) => TicketLimit(
-    info: json["info"],
-  );
+  factory TicketLimit.fromJson(Map<String, dynamic> json){
+    return TicketLimit(
+      info: json["info"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "info": info,
   };
+
 }
 
 class Ticketing {
@@ -1173,15 +1217,18 @@ class Ticketing {
     required this.safeTix,
   });
 
-  SafeTix safeTix;
+  final SafeTix? safeTix;
 
-  factory Ticketing.fromJson(Map<String, dynamic> json) => Ticketing(
-    safeTix: SafeTix.fromJson(json["safeTix"]),
-  );
+  factory Ticketing.fromJson(Map<String, dynamic> json){
+    return Ticketing(
+      safeTix: json["safeTix"] == null ? null : SafeTix.fromJson(json["safeTix"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "safeTix": safeTix.toJson(),
+    "safeTix": safeTix?.toJson(),
   };
+
 }
 
 class SafeTix {
@@ -1189,22 +1236,19 @@ class SafeTix {
     required this.enabled,
   });
 
-  bool enabled;
+  final bool? enabled;
 
-  factory SafeTix.fromJson(Map<String, dynamic> json) => SafeTix(
-    enabled: json["enabled"],
-  );
+  factory SafeTix.fromJson(Map<String, dynamic> json){
+    return SafeTix(
+      enabled: json["enabled"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "enabled": enabled,
   };
+
 }
-
-enum EventType { EVENT }
-
-final eventTypeValues = EnumValues({
-  "event": EventType.EVENT
-});
 
 class EventModelLinks {
   EventModelLinks({
@@ -1214,24 +1258,27 @@ class EventModelLinks {
     required this.last,
   });
 
-  First first;
-  First self;
-  First next;
-  First last;
+  final First? first;
+  final First? self;
+  final First? next;
+  final First? last;
 
-  factory EventModelLinks.fromJson(Map<String, dynamic> json) => EventModelLinks(
-    first: First.fromJson(json["first"]),
-    self: First.fromJson(json["self"]),
-    next: First.fromJson(json["next"]),
-    last: First.fromJson(json["last"]),
-  );
+  factory EventModelLinks.fromJson(Map<String, dynamic> json){
+    return EventModelLinks(
+      first: json["first"] == null ? null : First.fromJson(json["first"]),
+      self: json["self"] == null ? null : First.fromJson(json["self"]),
+      next: json["next"] == null ? null : First.fromJson(json["next"]),
+      last: json["last"] == null ? null : First.fromJson(json["last"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
-    "first": first.toJson(),
-    "self": self.toJson(),
-    "next": next.toJson(),
-    "last": last.toJson(),
+    "first": first?.toJson(),
+    "self": self?.toJson(),
+    "next": next?.toJson(),
+    "last": last?.toJson(),
   };
+
 }
 
 class Page {
@@ -1242,17 +1289,19 @@ class Page {
     required this.number,
   });
 
-  int size;
-  int totalElements;
-  int totalPages;
-  int number;
+  final int? size;
+  final int? totalElements;
+  final int? totalPages;
+  final int? number;
 
-  factory Page.fromJson(Map<String, dynamic> json) => Page(
-    size: json["size"],
-    totalElements: json["totalElements"],
-    totalPages: json["totalPages"],
-    number: json["number"],
-  );
+  factory Page.fromJson(Map<String, dynamic> json){
+    return Page(
+      size: json["size"],
+      totalElements: json["totalElements"],
+      totalPages: json["totalPages"],
+      number: json["number"],
+    );
+  }
 
   Map<String, dynamic> toJson() => {
     "size": size,
@@ -1260,16 +1309,5 @@ class Page {
     "totalPages": totalPages,
     "number": number,
   };
-}
 
-class EnumValues<T> {
-  Map<String, T> map;
-  late Map<T, String> reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String> get reverse {
-    reverseMap = map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }

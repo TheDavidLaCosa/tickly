@@ -2,6 +2,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class eventCard extends StatefulWidget {
+  final String image;
+  final String title;
+  final String time;
+  final String country;
+  final String city;
+  final String link;
+
+  eventCard({
+    required this.image,
+    required this.title,
+    required this.time,
+    required this.country,
+    required this.city,
+    required this.link,
+  });
+
   @override
   _eventCardState createState() => _eventCardState();
 }
@@ -31,7 +47,7 @@ class _eventCardState extends State<eventCard> {
               height: 50,
               child: AspectRatio(
                 aspectRatio: 16/9,
-                child: Image.asset("assets/images/prova.jpg"),
+                child: Image.asset(widget.image),
               )),
           const SizedBox(width: 15),
           Expanded(
@@ -39,9 +55,9 @@ class _eventCardState extends State<eventCard> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("MichaelBublé - Higher Tour 2023", style: TextStyle(fontFamily: "jaldi", fontSize: 17, height: 1), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
+                Text(widget.title, style: TextStyle(fontFamily: "jaldi", fontSize: 17, height: 1), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
                 const SizedBox(height: 5),
-                Text("2023-02-26 at Palau Sant Jordi (Barcelona)", style: TextStyle(fontFamily: "jaldi", fontSize: 13, height: 1), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
+                Text(widget.time + " in " + widget.city + " (" + widget.country + ")", style: TextStyle(fontFamily: "jaldi", fontSize: 13, height: 1), overflow: TextOverflow.ellipsis, textAlign: TextAlign.center,),
                 const SizedBox(height: 5),
                 Container(
                   height: 20,
@@ -54,7 +70,7 @@ class _eventCardState extends State<eventCard> {
                         child: IconButton(
                           icon: Icon(Icons.info, color: Color.fromRGBO(210, 36, 36, 1),),
                           onPressed: () { //TODO More info
-                            },
+                          },
                         ),
                       ),
                       Transform.translate(
