@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "509954020806",
+    "firebase_url": "https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tickly-b339e",
+    "storage_bucket": "tickly-b339e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:509954020806:android:157743ecccbda161b60ec7",
+        "android_client_info": {
+          "package_name": "com.example.tickly"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "509954020806-ppqava6tdtmusvfm3n67t9c4lhhcco1j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUIT9IXfvETjzEWVUIsCePOSFGXNUVdgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "509954020806-ppqava6tdtmusvfm3n67t9c4lhhcco1j.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "509954020806-tfi2av43cbm9cqhtptg5ol45epea2g0u.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tickly"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

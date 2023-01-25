@@ -1,5 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class eventCard extends StatefulWidget {
   final String image;
@@ -8,6 +11,8 @@ class eventCard extends StatefulWidget {
   final String country;
   final String city;
   final String link;
+  final String id;
+  FirebaseDatabase database = FirebaseDatabase.instance;
 
   eventCard({
     required this.image,
@@ -16,6 +21,7 @@ class eventCard extends StatefulWidget {
     required this.country,
     required this.city,
     required this.link,
+    required this.id,
   });
 
   @override
@@ -24,10 +30,45 @@ class eventCard extends StatefulWidget {
 
 class _eventCardState extends State<eventCard> {
   bool isLiked = false;
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
-  void _likeEvent() {
+
+  Future<void> _likeEvent() async {
     setState(() {
       isLiked = !isLiked;
+    });
+    if(isLiked){
+      await ref.child('1').child(widget.id).set({
+        "title": widget.title,
+        "date": widget.time,
+        "location": widget.city,
+        "city": widget.country,
+        "moreInfo": widget.link,
+        "img": widget.image,
+      });
+    }else{
+      await ref.child('1').child(widget.id).remove();
+    }
+  }
+
+  Future<bool> checkIfLiked(String id) async {
+    final snapshot = await FirebaseDatabase.instance.ref().child('1').child(widget.id).once();
+    if (snapshot.snapshot.exists) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+
+
+  @override
+  void initState(){
+    super.initState();
+    checkIfLiked(widget.id).then((value) {
+      setState(() {
+        isLiked = value;
+      });
     });
   }
 

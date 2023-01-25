@@ -8,8 +8,14 @@ import 'PantallaLogin.dart';
 import 'PantallaSearch.dart';
 import 'PantallaResults.dart';
 import 'PantallaNearEvent.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  if(Firebase.apps.isEmpty){
+    await Firebase.initializeApp(name: 'Tickly', options: DefaultFirebaseOptions.currentPlatform,);
+  }
   runApp(const MyApp());
 }
 
