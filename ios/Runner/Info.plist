@@ -55,5 +55,10 @@
         <string>Older devices need location.</string>
         <key>NSLocationAlwaysUsageDescription</key>
         <string>Can I have location always?</string>
+        <key>LSApplicationQueriesSchemes</key>
+        <array>
+          <string>sms</string>
+          <string>tel</string>
+        </array>
 </dict>
 </plist>

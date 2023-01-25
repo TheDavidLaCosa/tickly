@@ -78,7 +78,7 @@ class Event {
   final bool? test;
   final String? url;
   final String? locale;
-  final List<Image> images;
+  final List<ImageVar> images;
   final Sales? sales;
   final Dates? dates;
   final List<Classification> classifications;
@@ -105,7 +105,7 @@ class Event {
       test: json["test"],
       url: json["url"],
       locale: json["locale"],
-      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      images: json["images"] == null ? [] : List<ImageVar>.from(json["images"]!.map((x) => ImageVar.fromJson(x))),
       sales: json["sales"] == null ? null : Sales.fromJson(json["sales"]),
       dates: json["dates"] == null ? null : Dates.fromJson(json["dates"]),
       classifications: json["classifications"] == null ? [] : List<Classification>.from(json["classifications"]!.map((x) => Classification.fromJson(x))),
@@ -460,7 +460,7 @@ class Attraction {
   final bool? test;
   final String? url;
   final String? locale;
-  final List<Image> images;
+  final List<ImageVar> images;
   final List<Classification> classifications;
   final UpcomingEvents? upcomingEvents;
   final AttractionLinks? links;
@@ -474,7 +474,7 @@ class Attraction {
       test: json["test"],
       url: json["url"],
       locale: json["locale"],
-      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      images: json["images"] == null ? [] : List<ImageVar>.from(json["images"]!.map((x) => ImageVar.fromJson(x))),
       classifications: json["classifications"] == null ? [] : List<Classification>.from(json["classifications"]!.map((x) => Classification.fromJson(x))),
       upcomingEvents: json["upcomingEvents"] == null ? null : UpcomingEvents.fromJson(json["upcomingEvents"]),
       links: json["_links"] == null ? null : AttractionLinks.fromJson(json["_links"]),
@@ -559,8 +559,8 @@ class Musicbrainz {
 
 }
 
-class Image {
-  Image({
+class ImageVar {
+  ImageVar({
     required this.ratio,
     required this.url,
     required this.width,
@@ -576,8 +576,8 @@ class Image {
   final bool? fallback;
   final String? attribution;
 
-  factory Image.fromJson(Map<String, dynamic> json){
-    return Image(
+  factory ImageVar.fromJson(Map<String, dynamic> json){
+    return ImageVar(
       ratio: json["ratio"],
       url: json["url"],
       width: json["width"],
@@ -720,7 +720,7 @@ class Venue {
   final String? parkingDetail;
   final String? accessibleSeatingDetail;
   final GeneralInfo? generalInfo;
-  final List<Image> images;
+  final List<ImageVar> images;
 
   factory Venue.fromJson(Map<String, dynamic> json){
     return Venue(
@@ -746,7 +746,7 @@ class Venue {
       parkingDetail: json["parkingDetail"],
       accessibleSeatingDetail: json["accessibleSeatingDetail"],
       generalInfo: json["generalInfo"] == null ? null : GeneralInfo.fromJson(json["generalInfo"]),
-      images: json["images"] == null ? [] : List<Image>.from(json["images"]!.map((x) => Image.fromJson(x))),
+      images: json["images"] == null ? [] : List<ImageVar>.from(json["images"]!.map((x) => ImageVar.fromJson(x))),
     );
   }
 

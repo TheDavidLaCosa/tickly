@@ -5,6 +5,7 @@ import 'package:tickly/Global%20widgets/textInput.dart';
 import 'package:tickly/Global%20widgets/timePicker.dart';
 import 'package:tickly/PantallaRegister.dart';
 import 'PantallaLogin.dart';
+import 'PantallaInfo.dart';
 import 'PantallaSearch.dart';
 import 'PantallaResults.dart';
 import 'PantallaNearEvent.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PantallaNearEvent(),
+      home: PantallaInfo(),
     );
   }
 }
