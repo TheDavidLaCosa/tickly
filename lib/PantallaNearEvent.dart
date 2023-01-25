@@ -1,6 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:tickly/EventModel.dart';
+import 'package:http/http.dart' as http;
+
+import 'Global widgets/eventCard.dart';
 
 class PantallaNearEvent extends StatefulWidget {
   @override
@@ -10,12 +17,42 @@ class PantallaNearEvent extends StatefulWidget {
 class _PantallaNearEventState extends State<PantallaNearEvent> {
   late Position _currentPosition;
   bool _locationPermissionGranted = false;
+  final _formatter = DateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+  String _startDate = "";
+  String _endDate = "";
+  String _locationString = "";
   double _distance = 60;
+  int _distanceInt = 60;
+  EventModel _data = EventModel(embedded: null, links: null, page: null);
+
 
   @override
   void initState() {
     super.initState();
+    final now = DateTime.now();
+    _startDate = _formatter.format(DateTime(now.year, now.month, now.day));
+    _endDate = _formatter.format(now.add(Duration(days: 5)));
     _getLocationPermission();
+  }
+
+  Future<EventModel> _search(String currentLocation, int distance, String startDate, String endDate) async {
+    final uri = Uri.https('app.ticketmaster.com', 'discovery/v2/events', {
+      'apikey': '7elxdku9GGG5k8j0Xm8KWdANDgecHMV0',
+      'latlong': currentLocation,
+      'radius': distance.toString(),
+      'unit': "km",
+      'locale': 'es',
+      'startDateTime': startDate,
+      'endDateTime': endDate,
+      'size': "200",
+      'sort': "distance,date,asc"
+    });
+    final response = await http.get(uri).catchError((error) => 0);
+    if (response.statusCode == 200) {
+      return EventModel.fromJson(jsonDecode(response.body));
+    } else {
+      return Future.error("Error while fetching data");
+    }
   }
 
   _getLocationPermission() async {
@@ -39,6 +76,14 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
     setState(() {
       _currentPosition = position;
     });
+    _locationString = "${_currentPosition?.latitude},${_currentPosition?.longitude}";
+    _search(_locationString, _distanceInt, _startDate, _endDate)
+        .then((data) {
+      setState(() {
+        _data = data;
+      });
+    }).catchError((error) => {print(error)});
+
   }
 
   @override
@@ -66,10 +111,12 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 20),
-              Text("EVENTS AT $_distance km FROM YOU", style: TextStyle(fontFamily: "jaldi", fontSize: 30, fontWeight: FontWeight.bold)),
+              Text("EVENTS AT $_distanceInt km FROM YOU", style: TextStyle(fontFamily: "jaldi", fontSize: 30, fontWeight: FontWeight.bold)),
               SliderTheme(
                 data: SliderTheme.of(context).copyWith(
                   activeTrackColor: Colors.red,
+                  inactiveTickMarkColor:  Colors.red.withOpacity(0),
+                  activeTickMarkColor:  Colors.red.withOpacity(0),
                   inactiveTrackColor: Colors.red.withOpacity(0.3),
                   thumbColor: Colors.red,
                   overlayColor: Colors.red.withOpacity(0),
@@ -83,16 +130,22 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
                   min: 20,
                   max: 200,
                   divisions: 9,
-                  //label: '$_distance' + 'km',
                   onChanged: (double newValue) {
                     setState(() {
                       _distance = (newValue / 20).round() * 20;
+                      _distanceInt = _distance.toInt();
+                      _search(_locationString, _distanceInt, _startDate, _endDate).then((data) {
+                        setState(() {
+                          _data = data;
+                        });
+                      }).catchError((error) => {print(error)});
                     });
                   },
                 ),
-              )
-              /*Expanded(
-                child: /*ListView.builder(
+              ),
+              _data.embedded != null ?
+              Expanded(
+                child: ListView.builder(
                   itemCount: _data.page!.totalElements! < 200 ? _data.page!.totalElements! : 200,
                   itemBuilder: (context, index) {
                     if(_data.embedded!.events![index].embedded != null){
@@ -102,8 +155,14 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
 
                     }
                   },
-                ),*/
-              ),*/
+                ))
+              : Container(),
+                    /*if(_data.embedded!.events![index].embedded != null){
+
+                    }else{
+                      return eventCard(image: _data.embedded!.events[index]!.images[0]!.url!, title: _data.embedded!.events[index]!.name!, time: DateFormat('yyyy-MM-dd').format(_data.embedded!.events[index]!.dates!.start!.localDate!), country: "No country", city: "No city", link: "link");
+
+                    }*/
             ],
           ),
         ),

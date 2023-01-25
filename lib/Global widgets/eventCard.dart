@@ -71,7 +71,7 @@ class _eventCardState extends State<eventCard> {
                       Transform.translate(
                         offset: Offset(0, -8),
                         child: IconButton(
-                          icon: Icon(Icons.info, color: Color.fromRGBO(210, 36, 36, 1),),
+                          icon: Icon(Icons.info_outline_rounded, color: Color.fromRGBO(210, 36, 36, 1),),
                           onPressed: () { //TODO More info
                           },
                         ),
