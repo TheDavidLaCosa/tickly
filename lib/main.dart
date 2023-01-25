@@ -7,6 +7,7 @@ import 'package:tickly/PantallaRegister.dart';
 import 'PantallaLogin.dart';
 import 'PantallaSearch.dart';
 import 'PantallaResults.dart';
+import 'PantallaNearEvent.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PantallaSearch(),
+      home: PantallaNearEvent(),
     );
   }
 }
