@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+import '../PantallaInfo.dart';
+
 class eventCard extends StatefulWidget {
   final String image;
   final String title;
@@ -114,7 +116,21 @@ class _eventCardState extends State<eventCard> {
                         offset: Offset(0, -8),
                         child: IconButton(
                           icon: Icon(Icons.info_outline_rounded, color: Color.fromRGBO(210, 36, 36, 1),),
-                          onPressed: () { //TODO More info
+                          onPressed: () {
+
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        PantallaInfo(id: widget.id),
+                                  ),
+                                );
+
+
+
+
+                            //TODO More info
                           },
                         ),
                       ),

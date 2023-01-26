@@ -12,18 +12,40 @@ import 'package:url_launcher/url_launcher.dart';
 import 'Global widgets/redButton.dart';
 
 class PantallaInfo extends StatefulWidget {
-  const PantallaInfo({super.key});
+  final String id;
+
+  const PantallaInfo({required this.id});
 
   @override
   State<PantallaInfo> createState() => _PantallaInfoState();
 }
 
 class _PantallaInfoState extends State<PantallaInfo> {
-  final Uri _url = Uri.parse('https://www.ticketmaster.es/event/michael-buble-higher-tour-2023-entradas/32301');
+  final Uri _url = Uri.parse(
+      'https://www.ticketmaster.es/event/michael-buble-higher-tour-2023-entradas/32301');
+  late String _id;
+  EventModel _data = EventModel(embedded: null, links: null, page: null);
+  late Future<EventModel> _future;
 
   @override
   void initState() {
     super.initState();
+    _id = widget.id;
+    _future = _search();
+  }
+
+  Future<EventModel> _search() async {
+    final uri = Uri.https('app.ticketmaster.com', 'discovery/v2/events', {
+      'apikey': '7elxdku9GGG5k8j0Xm8KWdANDgecHMV0',
+      'id': _id,
+    });
+    final response = await http.get(uri).catchError((error) => 0);
+    if (response.statusCode == 200) {
+      print(uri);
+      return EventModel.fromJson(jsonDecode(response.body));
+    } else {
+      return Future.error("Error while fetching data");
+    }
   }
 
   @override
@@ -45,8 +67,18 @@ class _PantallaInfoState extends State<PantallaInfo> {
       backgroundColor: const Color.fromRGBO(232, 231, 231, 1),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: _buildColumn(),
-        ),
+            child: FutureBuilder(
+                future: _search(),
+                builder: (context, snapshort) {
+                  if (snapshort.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (snapshort.hasData) {
+                    return _buildColumn();
+                  }
+                  return Text("");
+                })),
       ),
     );
   }
@@ -110,96 +142,22 @@ class _PantallaInfoState extends State<PantallaInfo> {
       color: const Color.fromRGBO(232, 231, 231, 1),
       child: Column(
         children: [
-          Container(
-            margin: EdgeInsets.only(left: 25, right: 25),
-            child: Column(children: [
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Michael Bublé - Higher Tour 2023',
-                  style: TextStyle(
-                    fontSize: 26.0,
-                    fontFamily: 'jaldi',
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black,
-                    height: 1,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  'Rock, Pop',
-                  style: TextStyle(
-                    fontSize: 25.0,
-                    fontFamily: 'jaldi',
-                    fontWeight: FontWeight.w300,
-                    color: Colors.black,
-                    height: 1,
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                color: Colors.blueGrey,
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Image.asset('assets/images/calendar.png', height: 50),
-                      SizedBox(width: 30),
-                      Container(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                '2023-02-01',
-                                style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                '21:00:00',
-                                style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    ]),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Image.asset('assets/images/price.png', height: 50),
-                      //Expanded(child: Container()),
-                      SizedBox(width: 30),
+          FutureBuilder(
+              future: _search(),
+              builder: (context, snapshort) {
+                if (snapshort.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (snapshort.hasData) {
+                  return Container(
+                    margin: EdgeInsets.only(left: 25, right: 25),
+                    child: Column(children: [
                       Container(
                         alignment: Alignment.topLeft,
-                        child: Text(
-                          '56.5 - 287.5 EUR (including fees)',
+                        child: Text(snapshort.data!.embedded!.events[0]!.name!,
                           style: TextStyle(
-                            fontSize: 21.0,
+                            fontSize: 26.0,
                             fontFamily: 'jaldi',
                             fontWeight: FontWeight.w300,
                             color: Colors.black,
@@ -207,69 +165,153 @@ class _PantallaInfoState extends State<PantallaInfo> {
                           ),
                         ),
                       ),
-                    ]),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20),
-              Container(
-                child: Column(
-                  children: [
-                    Row(children: [
-                      Image.asset('assets/images/location.png', height: 50),
-                      SizedBox(width: 30),
+                      SizedBox(height: 20),
+                      Container(
+                        alignment: Alignment.topLeft,
+                        child: Text(snapshort.data!.embedded!.events[0]!.classifications[0]!.genre!.name! + ", " + snapshort.data!.embedded!.events[0]!.classifications[0]!.subGenre!.name!,
+                          style: TextStyle(
+                            fontSize: 25.0,
+                            fontFamily: 'jaldi',
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20),
                       Container(
                         child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Palau Sant Jordi',
-                                style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
+                            Row(children: [
+                              Image.asset('assets/images/calendar.png',
+                                  height: 50),
+                              SizedBox(width: 30),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(DateFormat('yyyy-MM-dd').format(snapshort.data!.embedded!.events[0]!.dates!.start!.localDate!),
+                                        style: TextStyle(
+                                          fontSize: 21.0,
+                                          fontFamily: 'jaldi',
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                          height: 1,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(snapshort.data!.embedded!.events[0]!.dates!.start!.localTime!,
+                                        style: TextStyle(
+                                          fontSize: 21.0,
+                                          fontFamily: 'jaldi',
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                          height: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                              ),
-                            ),
-                            SizedBox(height: 10),
-                            Container(
-                              alignment: Alignment.topLeft,
-                              child: Text(
-                                'Passeig Olímpic, 5-7, 08038 Barcelona',
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
+                              )
+                            ]),
                           ],
                         ),
-                      )
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: Column(
+                          children: [
+                            Row(children: [
+                              Image.asset('assets/images/price.png',
+                                  height: 50),
+                              //Expanded(child: Container()),
+                              SizedBox(width: 30),
+                              Container(
+                                alignment: Alignment.topLeft,
+                                child: Text("From " + snapshort.data!.embedded!.events[0]!.priceRanges[0]!.min!.toString() + " to " +
+                                    snapshort.data!.embedded!.events[0]!.priceRanges[0]!.max!.toString() + " " + snapshort.data!.embedded!.events[0]!.priceRanges[0]!.currency!,
+                                  style: TextStyle(
+                                    fontSize: 21.0,
+                                    fontFamily: 'jaldi',
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.black,
+                                    height: 1,
+                                  ),
+                                ),
+                              ),
+                            ]),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 20),
+                      Container(
+                        child: Column(
+                          children: [
+                            Row(children: [
+                              Image.asset('assets/images/location.png',
+                                  height: 50),
+                              SizedBox(width: 30),
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(snapshort.data!.embedded!.events[0]!.embedded!.venues[0]!.name!,
+                                        style: TextStyle(
+                                          fontSize: 21.0,
+                                          fontFamily: 'jaldi',
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                          height: 1,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Container(
+                                      alignment: Alignment.topLeft,
+                                      child: Text(snapshort.data!.embedded!.events[0]!.embedded!.venues[0]!.address!.line1! + ", " +
+                                          snapshort.data!.embedded!.events[0]!.embedded!.venues[0]!.postalCode! + " " +
+                                          snapshort.data!.embedded!.events[0]!.embedded!.venues[0]!.city!.name!,
+
+
+                                        style: TextStyle(
+                                          fontSize: 18.0,
+                                          fontFamily: 'jaldi',
+                                          fontWeight: FontWeight.w300,
+                                          color: Colors.black,
+                                          height: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ]),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 35),
+                      RedButton(
+                          text: "Buy tickets",
+                          function: () => {_launchUrl(_url)}),
+                      SizedBox(height: 20),
                     ]),
-                  ],
-                ),
-              ),
-              SizedBox(height: 35),
-              RedButton(text: "Buy tickets", function: () => {
-                _launchUrl(_url)
+                  );
+                }
+                return Text("");
               }),
-              SizedBox(height: 20),
-            ]),
-          ),
         ],
       ));
 
   Future<void> _launchUrl(Uri url) async {
     if (!await launchUrl(url)) {
       throw Exception('Could not launch $url');
-    }else{
-    }
+    } else {}
   }
 }

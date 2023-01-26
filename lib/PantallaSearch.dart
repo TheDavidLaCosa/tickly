@@ -24,8 +24,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
   final _event = TextEditingController();
   final _location = TextEditingController();
 
-  Future<EventModel> _search(
-      String event, String startDate, String location) async {
+  Future<EventModel> _search (String event, String startDate, String location) async {
     final uri = Uri.https('app.ticketmaster.com', 'discovery/v2/events', {
       'apikey': '7elxdku9GGG5k8j0Xm8KWdANDgecHMV0',
       'keyword': event,
