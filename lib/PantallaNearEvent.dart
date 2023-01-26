@@ -51,7 +51,7 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
     if (response.statusCode == 200) {
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
-      return Future.error("Error while fetching data");
+      return EventModel(embedded: null, links: null, page: null);
     }
   }
 
@@ -82,7 +82,7 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
       setState(() {
         _data = data;
       });
-    }).catchError((error) => {print(error)});
+    }).catchError((error) => {});
 
   }
 
@@ -138,7 +138,7 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
                         setState(() {
                           _data = data;
                         });
-                      }).catchError((error) => {print(error)});
+                      }).catchError((error) => {});
                     });
                   },
                 ),
@@ -156,7 +156,15 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
                     }
                   },
                 ))
-              : Container(),
+              : Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [SizedBox(height: 40), Text("No events in your zone in the next 5 days. Try looking a bit further", textAlign: TextAlign.center, style: TextStyle(
+                    fontFamily: "jaldi",
+                    fontSize: 25))]
+                ),
+              ),
                     /*if(_data.embedded!.events![index].embedded != null){
 
                     }else{
