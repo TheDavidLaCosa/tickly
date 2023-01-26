@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/scheduler.dart';
 
 class eventCard extends StatefulWidget {
   final String image;
@@ -12,7 +13,6 @@ class eventCard extends StatefulWidget {
   final String city;
   final String link;
   final String id;
-  FirebaseDatabase database = FirebaseDatabase.instance;
 
   eventCard({
     required this.image,
@@ -35,10 +35,7 @@ class _eventCardState extends State<eventCard> {
 
 
   Future<void> _likeEvent() async {
-    setState(() {
-      isLiked = !isLiked;
-    });
-    if(isLiked){
+    if(!isLiked){
       await ref.child('1').child(widget.id).set({
         "title": widget.title,
         "date": widget.time,
@@ -46,17 +43,32 @@ class _eventCardState extends State<eventCard> {
         "city": widget.country,
         "moreInfo": widget.link,
         "img": widget.image,
+        "id": widget.id
+      });
+      setState(() {
+        isLiked = true;
       });
     }else{
-      await ref.child('1').child(widget.id).remove();
+      setState(() {
+        isLiked = false;
+      });
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        await ref.child('1').child(widget.id).remove();
+      });
     }
   }
 
   Future<bool> checkIfLiked(String id) async {
     final snapshot = await FirebaseDatabase.instance.ref().child('1').child(widget.id).once();
     if (snapshot.snapshot.exists) {
+      setState(() {
+        isLiked = true;
+      });
       return true;
     } else {
+      setState(() {
+        isLiked = false;
+      });
       return false;
     }
   }
@@ -122,7 +134,10 @@ class _eventCardState extends State<eventCard> {
                         offset: Offset(0, -8),
                         child: IconButton(
                           icon: Icon(isLiked ? Icons.favorite : Icons.favorite_border, color: Color.fromRGBO(210, 36, 36, 1),),
-                          onPressed: _likeEvent,
+                          onPressed: () {
+                            _likeEvent();
+                            checkIfLiked(widget.id);
+                          },
                           //TODO: Like button
                         ),
                       ),
