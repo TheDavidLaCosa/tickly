@@ -39,7 +39,6 @@ class _PantallaInfoState extends State<PantallaInfo> {
     });
     final response = await http.get(uri).catchError((error) => 0);
     if (response.statusCode == 200) {
-      print(uri);
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
       return Future.error("Error while fetching data");
@@ -56,8 +55,7 @@ class _PantallaInfoState extends State<PantallaInfo> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, size: 25),
           onPressed: () {
-            //TODO: Go back
-            //Go back action here
+            Navigator.pop(context);
           },
         ),
       ),
@@ -65,18 +63,7 @@ class _PantallaInfoState extends State<PantallaInfo> {
       backgroundColor: const Color.fromRGBO(232, 231, 231, 1),
       body: SafeArea(
         child: SingleChildScrollView(
-            child: FutureBuilder(
-                future: _search(),
-                builder: (context, snapshort) {
-                  if (snapshort.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (snapshort.hasData) {
-                    return _buildColumn();
-                  }
-                  return Text("");
-                })),
+            child: _buildColumn()),
       ),
     );
   }
@@ -99,10 +86,14 @@ class _PantallaInfoState extends State<PantallaInfo> {
                 );
               }else if(snapshort.hasData){
                 return Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(255, 186, 184, 1),
+                    ),
                     width: MediaQuery.of(context).size.width,
                     child: AspectRatio(
                       aspectRatio: 16 / 9,
                       child: FadeInImage.assetNetwork(
+                        fit: BoxFit.cover,
                         placeholder: 'assets/images/prova.jpg',
                         image: snapshort.data!.embedded!.events[0]!.images[0]!.url!,
                       ),

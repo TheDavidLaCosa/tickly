@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:tickly/EventModel.dart';
+import 'package:tickly/PantallaFavourites.dart';
+import 'package:tickly/PantallaNearEvent.dart';
 
 import 'Global widgets/redButton.dart';
 import 'Global widgets/textInput.dart';
@@ -108,7 +110,10 @@ class _PantallaSearchState extends State<PantallaSearch> {
                                 child: Icon(Icons.favorite_rounded,
                                     color: Colors.red, size: 45),
                                 onTap: () {
-                                  //TODO Navigate to favourites
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => PantallaFavourites()),
+                                  );
                                 },
                               ),
                               const SizedBox(width: 10),
@@ -116,7 +121,10 @@ class _PantallaSearchState extends State<PantallaSearch> {
                                 child: const Icon(Icons.travel_explore_rounded,
                                     color: Colors.red, size: 45),
                                 onTap: () {
-                                  //TODO navigate to the explore screen
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => PantallaNearEvent()),
+                                  );
                                 },
                               ),
                             ],

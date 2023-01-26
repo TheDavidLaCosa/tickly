@@ -30,8 +30,7 @@ class _PantallaFavouritesState extends State<PantallaFavourites> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, size: 25),
           onPressed: () {
-            //TODO: Go back
-            //Go back action here
+            Navigator.pop(context);
           },
         ),
       ),
