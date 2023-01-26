@@ -21,8 +21,6 @@ class PantallaInfo extends StatefulWidget {
 }
 
 class _PantallaInfoState extends State<PantallaInfo> {
-  final Uri _url = Uri.parse(
-      'https://www.ticketmaster.es/event/michael-buble-higher-tour-2023-entradas/32301');
   late String _id;
   EventModel _data = EventModel(embedded: null, links: null, page: null);
   late Future<EventModel> _future;
@@ -93,13 +91,26 @@ class _PantallaInfoState extends State<PantallaInfo> {
       );
 
   Widget _buildTopContainer() => Container(
-        child: AspectRatio(
-          aspectRatio: 16 / 9,
-          child: FadeInImage.assetNetwork(
-            placeholder: 'assets/images/prova.jpg',
-            image:
-                'https://s1.ticketm.net/dam/a/606/d5137e2d-c5f4-4438-a1cf-2d1eb0e5b606_1789531_RETINA_PORTRAIT_16_9.jpg',
-          ),
+        child: FutureBuilder(
+            future: _search(),
+            builder: (context, snapshort){
+              if(snapshort.connectionState == ConnectionState.waiting){
+                return const Center(child: CircularProgressIndicator(),
+                );
+              }else if(snapshort.hasData){
+                return Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: FadeInImage.assetNetwork(
+                        placeholder: 'assets/images/prova.jpg',
+                        image: snapshort.data!.embedded!.events[0]!.images[0]!.url!,
+                      ),
+                    )
+                );
+              }
+              return Text("");
+            }
         ),
       );
 
@@ -299,7 +310,7 @@ class _PantallaInfoState extends State<PantallaInfo> {
                       SizedBox(height: 35),
                       RedButton(
                           text: "Buy tickets",
-                          function: () => {_launchUrl(_url)}),
+                          function: () => {_launchUrl(Uri.parse(snapshort.data!.embedded!.events[0]!.url!))}),
                       SizedBox(height: 20),
                     ]),
                   );
