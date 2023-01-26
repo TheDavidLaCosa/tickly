@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
     appId: '1:509954020806:android:157743ecccbda161b60ec7',
     messagingSenderId: '509954020806',
     projectId: 'tickly-b339e',
-    databaseURL: 'https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL: 'https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app/',
     storageBucket: 'tickly-b339e.appspot.com',
   );
 
@@ -63,7 +63,7 @@ class DefaultFirebaseOptions {
     appId: '1:509954020806:ios:34c1f95707528a20b60ec7',
     messagingSenderId: '509954020806',
     projectId: 'tickly-b339e',
-    databaseURL: 'https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app',
+    databaseURL: 'https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app/',
     storageBucket: 'tickly-b339e.appspot.com',
     iosClientId: '509954020806-tfi2av43cbm9cqhtptg5ol45epea2g0u.apps.googleusercontent.com',
     iosBundleId: 'com.example.tickly',

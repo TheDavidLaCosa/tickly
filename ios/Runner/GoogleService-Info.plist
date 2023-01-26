@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:509954020806:ios:34c1f95707528a20b60ec7</string>
+	<key>DATABASE_URL</key>
+	<string>https://tickly-b339e-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>
