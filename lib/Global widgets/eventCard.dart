@@ -154,7 +154,6 @@ class _eventCardState extends State<eventCard> {
                             _likeEvent();
                             checkIfLiked(widget.id);
                           },
-                          //TODO: Like button
                         ),
                       ),
                     ],

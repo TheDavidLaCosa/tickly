@@ -1,7 +1,9 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -23,15 +25,22 @@ class PantallaInfo extends StatefulWidget {
 class _PantallaInfoState extends State<PantallaInfo>
     with WidgetsBindingObserver {
   EventModel _data = EventModel(embedded: null, links: null, page: null);
+  bool isLiked = false;
+  String city = "No city";
+  String country = "No country";
+  DatabaseReference ref = FirebaseDatabase.instance.ref();
 
   @override
   void initState() {
     super.initState();
-    print("Prova");
     _search().then((data) {
-      print("Prova1");
       _data = data;
     }).catchError((error) => {print("Prova2")});
+    checkIfLiked(widget.id).then((value) {
+      setState(() {
+        isLiked = value;
+      });
+    });
   }
 
   Future<EventModel> _search() async {
@@ -45,12 +54,56 @@ class _PantallaInfoState extends State<PantallaInfo>
     if (response.statusCode == 200) {
       setState(() {
         _data = EventModel.fromJson(jsonDecode(response.body));
+        city = _data.embedded!.events[0]!.embedded!.venues[0]!.city!.name!;
+        country = _data.embedded!.events[0]!.embedded!.venues[0]!.country!.name!;
       });
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
       return EventModel(embedded: null, links: null, page: null);
     }
   }
+
+  Future<void> _likeEvent() async {
+    if(!isLiked){
+      await ref.child('1').child(widget.id).set({
+        "title": _data.embedded!.events[0]!.name!,
+        "date": DateFormat('yyyy-MM-dd').format(_data.embedded!.events[0]!.dates!.start!.localDate!),
+        "location": city,
+        "city": country,
+        "moreInfo": _data.embedded!.events[0]!.url!,
+        "img": _data.embedded!.events[0]!.images[0]!.url!,
+        "id": _data.embedded!.events[0]!.id!
+      });
+      setState(() {
+        isLiked = true;
+        print("Ara si");
+      });
+    }else{
+      SchedulerBinding.instance.addPostFrameCallback((_) async {
+        await ref.child('1').child(widget.id).remove();
+      });
+      setState(() {
+        isLiked = false;
+        print("Ara no");
+      });
+    }
+  }
+
+  Future<bool> checkIfLiked(String id) async {
+    final snapshot = await FirebaseDatabase.instance.ref().child('1').child(widget.id).once();
+    if (snapshot.snapshot.exists) {
+      setState(() {
+        isLiked = true;
+      });
+      return true;
+    } else {
+      setState(() {
+        isLiked = false;
+      });
+      return false;
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +164,8 @@ class _PantallaInfoState extends State<PantallaInfo>
           child: Center(
             child: GestureDetector(
               onTap: () {
-                //TODO When pressing
+                _likeEvent();
+                checkIfLiked(widget.id);
               },
               child: Container(
                 height: buttonSize,
@@ -122,10 +176,15 @@ class _PantallaInfoState extends State<PantallaInfo>
                 ),
                 child: Align(
                   alignment: Alignment.center,
-                  child: Icon(
-                    Icons.favorite_rounded,
-                    size: 40.0,
-                    color: Colors.white,
+                  child: Transform.translate(
+                    offset: Offset(-6, -6),
+                    child: IconButton(
+                      icon: Icon(Icons.favorite, size: 45, color: isLiked ? Color.fromRGBO(210, 36, 36, 1) : Colors.white),
+                      onPressed: () {
+                        _likeEvent();
+                        checkIfLiked(widget.id);
+                      },
+                    ),
                   ),
                 ),
               ),
