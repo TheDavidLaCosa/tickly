@@ -6,9 +6,6 @@ import 'Global widgets/redButton.dart';
 import 'Global widgets/redText.dart';
 import 'Global widgets/textInput.dart';
 
-/*TODO: En les línies 38,40, 42 i 45 hi ha coses a canviar (no es pot fer fins
-        a que estigui fet el merge amb login (ho he fet per evitar conflictes)).*/
-
 class PantallaRegister extends StatefulWidget {
   PantallaRegister({Key? key}) : super(key: key);
 
