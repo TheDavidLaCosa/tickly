@@ -202,6 +202,26 @@ class _PantallaInfoState extends State<PantallaInfo>
       );
   }
 
+  double findSmallestPriceRange(List<dynamic> priceRanges) {
+    double smallestPrice = priceRanges[0]!.min!;
+    for (var priceRange in priceRanges) {
+      if (priceRange!.min! < smallestPrice) {
+        smallestPrice = priceRange!.min!;
+      }
+    }
+    return smallestPrice;
+  }
+
+  double findLargestPriceRange(List<dynamic> priceRanges) {
+    double largestPrice = priceRanges[0]!.max!;
+    for (var priceRange in priceRanges) {
+      if (priceRange!.max! > largestPrice) {
+        largestPrice = priceRange!.max!;
+      }
+    }
+    return largestPrice;
+  }
+
   Widget _buildBottomContainer() => Container(
       color: const Color.fromRGBO(232, 231, 231, 1),
       child: Column(
@@ -254,7 +274,7 @@ class _PantallaInfoState extends State<PantallaInfo>
                             Container(
                               alignment: Alignment.topLeft,
                               child: Text(
-                                DateFormat('yyyy-MM-dd').format(_data!.embedded!
+                                DateFormat('dd-MM-yyyy').format(_data!.embedded!
                                     .events[0]!.dates!.start!.localDate!),
                                 style: TextStyle(
                                   fontSize: 21.0,
@@ -272,8 +292,7 @@ class _PantallaInfoState extends State<PantallaInfo>
                                           .localTime !=
                                       null
                                   ? Text(
-                                      _data!.embedded!.events[0]!.dates!.start!
-                                          .localTime!,
+                                _data!.embedded!.events[0]!.dates!.start!.localTime!.substring(0, _data!.embedded!.events[0]!.dates!.start!.localTime!.length - 3),
                                       style: TextStyle(
                                         fontSize: 21.0,
                                         fontFamily: 'jaldi',
@@ -320,12 +339,12 @@ class _PantallaInfoState extends State<PantallaInfo>
                               ))
                           : Text(
                               "From " +
-                                  _data!
-                                      .embedded!.events[0]!.priceRanges[0]!.min!
+                                  findSmallestPriceRange(_data!
+                                      .embedded!.events[0]!.priceRanges)
                                       .toString() +
                                   " to " +
-                                  _data!
-                                      .embedded!.events[0]!.priceRanges[0]!.max!
+                                  findLargestPriceRange(_data!
+                                      .embedded!.events[0]!.priceRanges)
                                       .toString() +
                                   " " +
                                   _data!.embedded!.events[0]!.priceRanges[0]!
