@@ -9,12 +9,18 @@ import 'Global widgets/textInput.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 
-class PantallaLogin extends StatelessWidget {
+class PantallaLogin extends StatefulWidget {
+
+  PantallaLogin({super.key});
 
   final txtInEmail = TextEditingController();
   final txtInPassword = TextEditingController();
 
-  PantallaLogin({super.key});
+  @override
+  State<PantallaLogin> createState() => _PantallaLoginState();
+}
+
+class _PantallaLoginState extends State<PantallaLogin> {
 
   @override
   Widget build(BuildContext context) {
@@ -36,13 +42,13 @@ class PantallaLogin extends StatelessWidget {
                   fontWeight: FontWeight.bold)),
 
               const SizedBox(height: 60),
-              TextInput(text: "Enter email address", controller: txtInEmail,),
+              TextInput(text: "Enter email address", controller: widget.txtInEmail,),
 
               Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     const SizedBox(height: 10),
-                    TextInput(text: "Password", controller: txtInPassword),
+                    TextInput(text: "Password", controller: widget.txtInPassword),
                     const SizedBox(height: 10),
                     RedText(text: "Forgot password?", textSize: 25, function: () => {print("a")}),
                   ]
@@ -69,11 +75,18 @@ class PantallaLogin extends StatelessWidget {
   Future signIn() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: txtInEmail.text,
-          password: txtInPassword.text);
+          email: widget.txtInEmail.text,
+          password: widget.txtInPassword.text);
     } on FirebaseAuthException catch (error) {
       print(error.message);
+
     }
+  }
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    throw UnimplementedError();
   }
 }
 
