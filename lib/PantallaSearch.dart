@@ -34,10 +34,10 @@ class _PantallaSearchState extends State<PantallaSearch> {
       'startDateTime': startDate,
       'city': location,
       'size': "200",
+      'sort': "date,name,asc"
     });
     final response = await http.get(uri).catchError((error) => 0);
     if (response.statusCode == 200) {
-      print(uri);
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
       return Future.error("Error while fetching data");

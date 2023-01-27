@@ -148,15 +148,15 @@ class _PantallaInfoState extends State<PantallaInfo>
                 child: Text(
                   _data!.embedded!.events[0]!.name!,
                   style: TextStyle(
-                    fontSize: 26.0,
+                    fontSize: 28.0,
                     fontFamily: 'jaldi',
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     height: 1,
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              SizedBox(height: 10),
               Container(
                 alignment: Alignment.topLeft,
                 child: Text(
@@ -165,7 +165,7 @@ class _PantallaInfoState extends State<PantallaInfo>
                       _data!.embedded!.events[0]!.classifications[0]!.subGenre!
                           .name!,
                   style: TextStyle(
-                    fontSize: 25.0,
+                    fontSize: 24.0,
                     fontFamily: 'jaldi',
                     fontWeight: FontWeight.w300,
                     color: Colors.black,
@@ -201,9 +201,18 @@ class _PantallaInfoState extends State<PantallaInfo>
                             SizedBox(height: 10),
                             Container(
                               alignment: Alignment.topLeft,
-                              child: Text(
+                              child: _data!.embedded!.events[0]!.dates!.start!
+                                  .localTime != null ? Text(
                                 _data!.embedded!.events[0]!.dates!.start!
                                     .localTime!,
+                                style: TextStyle(
+                                  fontSize: 21.0,
+                                  fontFamily: 'jaldi',
+                                  fontWeight: FontWeight.w300,
+                                  color: Colors.black,
+                                  height: 1,
+                                ),
+                              ) : Text("Time not defined",
                                 style: TextStyle(
                                   fontSize: 21.0,
                                   fontFamily: 'jaldi',
@@ -229,7 +238,15 @@ class _PantallaInfoState extends State<PantallaInfo>
                   Flexible(
                     child: Container(
                       alignment: Alignment.topLeft,
-                      child: Text(
+                      child: _data!.embedded!.events[0]!.priceRanges.isEmpty ? Text(
+                          "Prices not availible",
+                          style: TextStyle(
+                            fontSize: 21.0,
+                            fontFamily: 'jaldi',
+                            fontWeight: FontWeight.w300,
+                            color: Colors.black,
+                            height: 1,
+                          )) : Text(
                         "From " +
                             _data!.embedded!.events[0]!.priceRanges[0]!.min!
                                 .toString() +
