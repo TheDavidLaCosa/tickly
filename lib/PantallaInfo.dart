@@ -55,7 +55,8 @@ class _PantallaInfoState extends State<PantallaInfo>
       setState(() {
         _data = EventModel.fromJson(jsonDecode(response.body));
         city = _data.embedded!.events[0]!.embedded!.venues[0]!.city!.name!;
-        country = _data.embedded!.events[0]!.embedded!.venues[0]!.country!.name!;
+        country =
+            _data.embedded!.events[0]!.embedded!.venues[0]!.country!.name!;
       });
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
@@ -64,10 +65,11 @@ class _PantallaInfoState extends State<PantallaInfo>
   }
 
   Future<void> _likeEvent() async {
-    if(!isLiked){
+    if (!isLiked) {
       await ref.child('1').child(widget.id).set({
         "title": _data.embedded!.events[0]!.name!,
-        "date": DateFormat('yyyy-MM-dd').format(_data.embedded!.events[0]!.dates!.start!.localDate!),
+        "date": DateFormat('yyyy-MM-dd')
+            .format(_data.embedded!.events[0]!.dates!.start!.localDate!),
         "location": city,
         "city": country,
         "moreInfo": _data.embedded!.events[0]!.url!,
@@ -76,21 +78,23 @@ class _PantallaInfoState extends State<PantallaInfo>
       });
       setState(() {
         isLiked = true;
-        print("Ara si");
       });
-    }else{
+    } else {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
         await ref.child('1').child(widget.id).remove();
       });
       setState(() {
         isLiked = false;
-        print("Ara no");
       });
     }
   }
 
   Future<bool> checkIfLiked(String id) async {
-    final snapshot = await FirebaseDatabase.instance.ref().child('1').child(widget.id).once();
+    final snapshot = await FirebaseDatabase.instance
+        .ref()
+        .child('1')
+        .child(widget.id)
+        .once();
     if (snapshot.snapshot.exists) {
       setState(() {
         isLiked = true;
@@ -103,7 +107,6 @@ class _PantallaInfoState extends State<PantallaInfo>
       return false;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -131,12 +134,18 @@ class _PantallaInfoState extends State<PantallaInfo>
         ));
   }
 
-  Widget _buildColumn() => Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+  Widget _buildColumn() => Stack(
         children: [
-          _buildTopContainer(),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _buildTopContainer(),
+                _buildBottomContainer(),
+              ],
+            ),
+          ),
           _buildMidContainerWithButton(),
-          _buildBottomContainer(),
         ],
       );
 
@@ -154,51 +163,50 @@ class _PantallaInfoState extends State<PantallaInfo>
         ),
       ));
 
+  void _onPress() {
+    _likeEvent();
+    checkIfLiked(widget.id);
+  }
+
   Widget _buildMidContainerWithButton() {
     final buttonSize = 70.0;
-    return Stack(
-      children: [
-        Container(height: buttonSize, color: Color.fromRGBO(232, 231, 231, 1)),
-        Transform.translate(
-          offset: Offset(100.0, -buttonSize / 2.0),
-          child: Center(
-            child: GestureDetector(
-              onTap: () {
-                _likeEvent();
-                checkIfLiked(widget.id);
-              },
-              child: Container(
-                height: buttonSize,
-                width: buttonSize,
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(255, 186, 184, 1),
-                  borderRadius: BorderRadius.circular(100),
-                ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Transform.translate(
-                    offset: Offset(-6, -6),
-                    child: IconButton(
-                      icon: Icon(Icons.favorite, size: 45, color: isLiked ? Color.fromRGBO(210, 36, 36, 1) : Colors.white),
-                      onPressed: () {
-                        _likeEvent();
-                        checkIfLiked(widget.id);
-                      },
-                    ),
+    return Transform.translate(
+        offset: Offset(100.0, MediaQuery.of(context).size.width*(9/16)-35),
+        child: Center(
+          child: GestureDetector(
+            onTap: _onPress,
+            child: Container(
+              height: buttonSize,
+              width: buttonSize,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(255, 186, 184, 1),
+                borderRadius: BorderRadius.circular(100),
+              ),
+              child: Align(
+                alignment: Alignment.center,
+                child: Transform.translate(
+                  offset: Offset(-6, -6),
+                  child: IconButton(
+                    icon: Icon(Icons.favorite,
+                        size: 45,
+                        color: isLiked
+                            ? Color.fromRGBO(210, 36, 36, 1)
+                            : Colors.white),
+                    onPressed: null,
                   ),
                 ),
               ),
             ),
           ),
         ),
-      ],
-    );
+      );
   }
 
   Widget _buildBottomContainer() => Container(
       color: const Color.fromRGBO(232, 231, 231, 1),
       child: Column(
         children: [
+          SizedBox(height: 50),
           Container(
             margin: EdgeInsets.only(left: 25, right: 25),
             child: Column(children: [
@@ -261,25 +269,29 @@ class _PantallaInfoState extends State<PantallaInfo>
                             Container(
                               alignment: Alignment.topLeft,
                               child: _data!.embedded!.events[0]!.dates!.start!
-                                  .localTime != null ? Text(
-                                _data!.embedded!.events[0]!.dates!.start!
-                                    .localTime!,
-                                style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
-                                ),
-                              ) : Text("Time not defined",
-                                style: TextStyle(
-                                  fontSize: 21.0,
-                                  fontFamily: 'jaldi',
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.black,
-                                  height: 1,
-                                ),
-                              ),
+                                          .localTime !=
+                                      null
+                                  ? Text(
+                                      _data!.embedded!.events[0]!.dates!.start!
+                                          .localTime!,
+                                      style: TextStyle(
+                                        fontSize: 21.0,
+                                        fontFamily: 'jaldi',
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.black,
+                                        height: 1,
+                                      ),
+                                    )
+                                  : Text(
+                                      "Time not defined",
+                                      style: TextStyle(
+                                        fontSize: 21.0,
+                                        fontFamily: 'jaldi',
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.black,
+                                        height: 1,
+                                      ),
+                                    ),
                             ),
                           ],
                         ),
@@ -297,32 +309,35 @@ class _PantallaInfoState extends State<PantallaInfo>
                   Flexible(
                     child: Container(
                       alignment: Alignment.topLeft,
-                      child: _data!.embedded!.events[0]!.priceRanges.isEmpty ? Text(
-                          "Prices not availible",
-                          style: TextStyle(
-                            fontSize: 21.0,
-                            fontFamily: 'jaldi',
-                            fontWeight: FontWeight.w300,
-                            color: Colors.black,
-                            height: 1,
-                          )) : Text(
-                        "From " +
-                            _data!.embedded!.events[0]!.priceRanges[0]!.min!
-                                .toString() +
-                            " to " +
-                            _data!.embedded!.events[0]!.priceRanges[0]!.max!
-                                .toString() +
-                            " " +
-                            _data!
-                                .embedded!.events[0]!.priceRanges[0]!.currency!,
-                        style: TextStyle(
-                          fontSize: 21.0,
-                          fontFamily: 'jaldi',
-                          fontWeight: FontWeight.w300,
-                          color: Colors.black,
-                          height: 1,
-                        ),
-                      ),
+                      child: _data!.embedded!.events[0]!.priceRanges.isEmpty
+                          ? Text("Prices not availible",
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontFamily: 'jaldi',
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                                height: 1,
+                              ))
+                          : Text(
+                              "From " +
+                                  _data!
+                                      .embedded!.events[0]!.priceRanges[0]!.min!
+                                      .toString() +
+                                  " to " +
+                                  _data!
+                                      .embedded!.events[0]!.priceRanges[0]!.max!
+                                      .toString() +
+                                  " " +
+                                  _data!.embedded!.events[0]!.priceRanges[0]!
+                                      .currency!,
+                              style: TextStyle(
+                                fontSize: 21.0,
+                                fontFamily: 'jaldi',
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                                height: 1,
+                              ),
+                            ),
                     ),
                   ),
                 ]),
@@ -381,7 +396,7 @@ class _PantallaInfoState extends State<PantallaInfo>
                   ),
                 ]),
               ),
-              SizedBox(height: 35),
+              SizedBox(height: 45),
               RedButton(
                   text: "Buy tickets",
                   function: () => {
