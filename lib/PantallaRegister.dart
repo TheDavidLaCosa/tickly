@@ -50,42 +50,44 @@ class _PantallaRegisterState extends State<PantallaRegister> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(232, 231, 231, 1),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          const Text("Welcome!", style: TextStyle(fontFamily: "jaldi",
-              fontSize: 50,
-              fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
-          const Text("One step closer to start enjoying Tickly",style: TextStyle(fontFamily: "jaldi",
-              fontSize: 20,
-              fontWeight: FontWeight.bold)),
-
-          const SizedBox(height: 60),
-          TextInput(text: "Enter email address", controller: widget.txtEmail),
-          const SizedBox(height: 15),
-          TextInput(text: "Password", controller: widget.txtPassword),
-          const SizedBox(height: 15),
-          TextInput(text: "Repeat password", controller: widget.txtRepPassword),
-
-          const SizedBox(height: 50),
-          RedButton(text: "Sign up", function: () => {register()}),
-          const SizedBox(height: 40,),
-          Row(
+      body: Center(
+        child: SingleChildScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              const Text("Already a member?  ", style: TextStyle(fontFamily: "jaldi", fontSize: 25)),
-              RedText(text: "Log in here", textSize: 25, function: () => {Navigator.of(context).pushReplacement(
-                                                                          MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()))})
-            ],
-          ),
-          const SizedBox(height: 30),
+              const Text("Welcome!", style: TextStyle(fontFamily: "jaldi",
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold)),
+              const SizedBox(height: 10),
+              const Text("One step closer to start enjoying Tickly",style: TextStyle(fontFamily: "jaldi",
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold)),
 
-          //TODO: Borrar aquesta línia abans d'entrega.
-          RedButton(text: "[[[CLOSE MENÚ]]]", function: () => {Navigator.pop(context)})
-        ],
-      ),
+              const SizedBox(height: 60),
+              TextInput(text: "Enter email address", controller: widget.txtEmail),
+              const SizedBox(height: 15),
+              TextInput(text: "Password", controller: widget.txtPassword),
+              const SizedBox(height: 15),
+              TextInput(text: "Repeat password", controller: widget.txtRepPassword),
+
+              const SizedBox(height: 50),
+              RedButton(text: "Sign up", function: () => {register()}),
+              const SizedBox(height: 40,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  const Text("Already a member?  ", style: TextStyle(fontFamily: "jaldi", fontSize: 25)),
+                  RedText(text: "Log in here", textSize: 25, function: () => {Navigator.of(context).pushReplacement(
+                                                                              MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()))})
+                ],
+              ),
+              const SizedBox(height: 30),
+          ],
+        ),
+      )
+      )
     );;
   }
 }
