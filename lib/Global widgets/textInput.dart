@@ -4,10 +4,12 @@ class TextInput extends StatefulWidget {
 
   final String text;
   final TextEditingController controller;
+  final bool hide;
 
   const TextInput({Key? key,
                    required this.text,
-                   required this.controller}) : super(key: key);
+                   required this.controller,
+                   required this.hide}) : super(key: key);
 
   @override
   State<TextInput> createState() => _TextInputState();
@@ -40,6 +42,7 @@ class _TextInputState extends State<TextInput> {
                                    fontFamily: "jaldi",
                                    fontSize: 20),
             controller: widget.controller,
+            obscureText: widget.hide,
             decoration: InputDecoration(
               hintText: widget.text, //Posem widget perqué és statefull.
               border: OutlineInputBorder(

@@ -154,10 +154,9 @@ class _PantallaSearchState extends State<PantallaSearch> {
                           fontSize: 30,
                           fontWeight: FontWeight.bold)),
                   const SizedBox(height: 35),
-                  TextInput(text: "Keyword of the event", controller: _event),
+                  TextInput(text: "Keyword of the event", controller: _event, hide: false),
                   const SizedBox(height: 20),
-                  TextInput(
-                      text: "City of the event", controller: _location),
+                  TextInput(text: "City of the event", controller: _location, hide: false),
                   const SizedBox(height: 45),
                   const Text("Events starting after:",
                       style: TextStyle(fontFamily: "jaldi", fontSize: 22)),

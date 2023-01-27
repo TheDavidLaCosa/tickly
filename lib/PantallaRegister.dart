@@ -77,11 +77,11 @@ class _PantallaRegisterState extends State<PantallaRegister> {
                   fontWeight: FontWeight.bold)),
 
               const SizedBox(height: 60),
-              TextInput(text: "Enter email address", controller: widget.txtEmail),
+              TextInput(text: "Enter email address", controller: widget.txtEmail, hide: false),
               const SizedBox(height: 15),
-              TextInput(text: "Password", controller: widget.txtPassword),
+              TextInput(text: "Password", controller: widget.txtPassword, hide: true),
               const SizedBox(height: 15),
-              TextInput(text: "Repeat password", controller: widget.txtRepPassword),
+              TextInput(text: "Repeat password", controller: widget.txtRepPassword, hide: true),
 
               const SizedBox(height: 50),
               RedButton(text: "Sign up", function: () => {register()}),

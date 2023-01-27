@@ -42,13 +42,13 @@ class _PantallaLoginState extends State<PantallaLogin> {
                   fontWeight: FontWeight.bold)),
 
               const SizedBox(height: 60),
-              TextInput(text: "Enter email address", controller: widget.txtInEmail,),
+              TextInput(text: "Enter email address", controller: widget.txtInEmail, hide: false),
 
               Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: <Widget>[
                     const SizedBox(height: 10),
-                    TextInput(text: "Password", controller: widget.txtInPassword),
+                    TextInput(text: "Password", controller: widget.txtInPassword, hide: true),
                     const SizedBox(height: 10),
                     RedText(text: "Forgot password?", textSize: 25, function: () => {print("a")}),
                   ]
