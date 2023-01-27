@@ -80,6 +80,11 @@ class _PantallaLoginState extends State<PantallaLogin> {
     } on FirebaseAuthException catch (error) {
       print(error.message);
 
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(error.message.toString()),
+        backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
+      ));
+
     }
   }
 
