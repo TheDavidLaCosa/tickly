@@ -56,6 +56,9 @@ class _PantallaSearchState extends State<PantallaSearch> {
 
   @override
   Widget build(BuildContext context) {
+
+    final user = FirebaseAuth.instance.currentUser!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
@@ -138,7 +141,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
                     width: double.infinity,
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      "user@gmail.com",
+                      user.email!,
                       style: TextStyle(
                           fontFamily: "jaldi", fontSize: 26, height: 1.2),
                       overflow: TextOverflow.ellipsis,
