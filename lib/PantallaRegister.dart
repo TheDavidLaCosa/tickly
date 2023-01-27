@@ -35,9 +35,15 @@ class _PantallaRegisterState extends State<PantallaRegister> {
   }
 
   Future register() async {
-    await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: widget.txtEmail.text,
-        password: widget.txtPassword.text);
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: widget.txtEmail.text,
+          password: widget.txtPassword.text);
+    } on FirebaseAuthException catch (error) {
+      print(error.message);
+
+      return;
+    }
   }
 
   @override

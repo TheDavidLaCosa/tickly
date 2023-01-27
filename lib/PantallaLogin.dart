@@ -74,8 +74,6 @@ class PantallaLogin extends StatelessWidget {
           password: txtInPassword.text);
     } on FirebaseAuthException catch (error) {
       print(error.message);
-
-      return;
     }
   }
 }
