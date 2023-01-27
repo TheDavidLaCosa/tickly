@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tickly/PantallaLogin.dart';
 
@@ -21,17 +22,22 @@ class PantallaRegister extends StatefulWidget {
 
 class _PantallaRegisterState extends State<PantallaRegister> {
 
-  void saveData(){
+  void saveData() {
 
     if(widget.txtEmail.text == "" || widget.txtPassword.text == "" || widget.txtRepPassword.text == ""){
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         content: Text("Falten dades"),
       ));
+
+      register();
       return;
     }
+  }
 
-
-
+  Future register() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: widget.txtEmail.text,
+        password: widget.txtPassword.text);
   }
 
   @override
@@ -58,7 +64,7 @@ class _PantallaRegisterState extends State<PantallaRegister> {
           TextInput(text: "Repeat password", controller: widget.txtRepPassword),
 
           const SizedBox(height: 50),
-          RedButton(text: "Sign up", function: saveData),
+          RedButton(text: "Sign up", function: () => {register()}),
           const SizedBox(height: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

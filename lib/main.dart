@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot){
+          builder: (context, snapshot){ //TODO: Avisar d'errors 5:58
             if (snapshot.hasData) {
               return PantallaSearch();
             }

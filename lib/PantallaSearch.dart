@@ -141,7 +141,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
                     width: double.infinity,
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Text(
-                      user.email!,
+                      user.email!, //TODO: posar nom
                       style: TextStyle(
                           fontFamily: "jaldi", fontSize: 26, height: 1.2),
                       overflow: TextOverflow.ellipsis,
