@@ -45,6 +45,7 @@ dependencies:
   firebase_database: ^10.0.9
   firebase_auth: ^4.2.5
   url_launcher: ^6.1.8
+  email_validator: ^2.0.1
 
 dev_dependencies:
   flutter_test:

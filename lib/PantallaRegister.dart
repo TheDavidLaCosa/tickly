@@ -35,6 +35,16 @@ class _PantallaRegisterState extends State<PantallaRegister> {
   }
 
   Future register() async {
+
+    if(widget.txtPassword.text != widget.txtRepPassword.text){
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text("Passwords do not match"),
+        backgroundColor: Color.fromRGBO(210, 36, 36, 1),
+      ));
+
+      return;
+    }
+
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: widget.txtEmail.text,
@@ -49,6 +59,8 @@ class _PantallaRegisterState extends State<PantallaRegister> {
       return;
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
