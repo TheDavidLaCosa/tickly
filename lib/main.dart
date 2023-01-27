@@ -7,6 +7,7 @@ import 'package:tickly/PantallaRegister.dart';
 import 'PantallaLogin.dart';
 import 'PantallaInfo.dart';
 import 'PantallaSearch.dart';
+import 'PantallaInfo.dart';
 import 'PantallaFavourites.dart';
 import 'PantallaResults.dart';
 import 'PantallaNearEvent.dart';
