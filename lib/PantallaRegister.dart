@@ -37,11 +37,7 @@ class _PantallaRegisterState extends State<PantallaRegister> {
   Future register() async {
 
     if(widget.txtPassword.text != widget.txtRepPassword.text){
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text("Passwords do not match"),
-        backgroundColor: Color.fromRGBO(210, 36, 36, 1),
-      ));
-
+      ScaffoldMessage("Passwords do not match");
       return;
     }
 
@@ -50,14 +46,16 @@ class _PantallaRegisterState extends State<PantallaRegister> {
           email: widget.txtEmail.text,
           password: widget.txtPassword.text);
     } on FirebaseAuthException catch (error) {
-
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(error.message.toString()),
-        backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
-      ));
-
+      ScaffoldMessage(error.message.toString());
       return;
     }
+  }
+
+  void ScaffoldMessage(String txt){
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text(txt),
+      backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
+    ));
   }
 
 

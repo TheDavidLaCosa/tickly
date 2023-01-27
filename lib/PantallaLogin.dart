@@ -73,6 +73,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
   }
 
   Future signIn() async {
+
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: widget.txtInEmail.text,
