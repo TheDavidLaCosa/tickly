@@ -40,7 +40,11 @@ class _PantallaRegisterState extends State<PantallaRegister> {
           email: widget.txtEmail.text,
           password: widget.txtPassword.text);
     } on FirebaseAuthException catch (error) {
-      print(error.message);
+
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(error.message.toString()),
+        backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
+      ));
 
       return;
     }

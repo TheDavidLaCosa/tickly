@@ -78,7 +78,6 @@ class _PantallaLoginState extends State<PantallaLogin> {
           email: widget.txtInEmail.text,
           password: widget.txtInPassword.text);
     } on FirebaseAuthException catch (error) {
-      print(error.message);
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(error.message.toString()),
