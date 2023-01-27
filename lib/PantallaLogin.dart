@@ -1,3 +1,5 @@
+//import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:tickly/PantallaRegister.dart';
 
@@ -65,11 +67,17 @@ class PantallaLogin extends StatelessWidget {
     );
   }
 
-  Future signIn() async{
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email:  txtInEmail.text,
-        password: txtInPassword.text);
-  }
+  Future signIn() async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: txtInEmail.text,
+          password: txtInPassword.text);
+    } on FirebaseAuthException catch (error) {
+      print(error.message);
 
+      return;
+    }
+  }
 }
+
 
