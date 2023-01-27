@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:tickly/Global%20widgets/redButton.dart';
 import 'package:tickly/Global%20widgets/redText.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: PantallaSearch(),
+      home: MyHomePage(title: "Hola"),
     );
   }
 }
@@ -57,12 +58,14 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
-        child: Column(
-          children: <Widget>[
-            RedButton(text: 'Sing up', function: CarregaLogin,),
-          ],
-        ),
+      body: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot){
+            if (snapshot.hasData) {
+              return PantallaSearch();
+            }
+            return PantallaLogin();
+          }
       ),
     );
   }
