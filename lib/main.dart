@@ -48,7 +48,6 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-//TODO: Mirar si cal posar classe Padding en general o fer padding classe per classe
 class _MyHomePageState extends State<MyHomePage> {
 
   @override
@@ -57,9 +56,11 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: StreamBuilder<User?>(
           stream: FirebaseAuth.instance.authStateChanges(),
-          builder: (context, snapshot){ //TODO: Avisar d'errors 5:58
-            if (snapshot.hasData) {
+          builder: (context, snapshot){
+            if (snapshot.hasData) { //Si s'ha fet login carreguem el menú search.
               return PantallaSearch();
+            }else if(snapshot.connectionState == ConnectionState.waiting){ //Si s'està esperant mostrem un cercle de carrega.
+              return const Center(child: CircularProgressIndicator());
             }
             return PantallaLogin();
           }
