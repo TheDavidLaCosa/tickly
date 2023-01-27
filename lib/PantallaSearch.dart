@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -64,7 +65,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
           IconButton(
             icon: const Icon(Icons.logout_rounded, size: 25),
             onPressed: () {
-              //TODO: Logout
+              FirebaseAuth.instance.signOut();
               //Logout action here
             },
           ),
