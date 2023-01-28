@@ -66,6 +66,7 @@ class _PantallaResultsState extends State<PantallaResults> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 10),
                   ],
                 ),
               ),

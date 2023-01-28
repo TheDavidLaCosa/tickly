@@ -182,6 +182,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
                               );
                             }).catchError((error) => {print(error)})
                           }),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

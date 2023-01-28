@@ -72,6 +72,7 @@ class _PantallaFavouritesState extends State<PantallaFavourites> {
 
                 },
               )),
+              const SizedBox(height: 10),
             ],
           ),
         ),
