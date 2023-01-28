@@ -59,8 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
           builder: (context, snapshot){
             if (snapshot.hasData) { //Si s'ha fet login carreguem el menú search.
               return PantallaSearch();
-            }else if(snapshot.connectionState == ConnectionState.waiting){ //Si s'està esperant mostrem un cercle de carrega.
-              return const Center(child: CircularProgressIndicator());
             }
             return PantallaLogin();
           }
