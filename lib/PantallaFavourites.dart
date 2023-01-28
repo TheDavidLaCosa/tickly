@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class PantallaFavourites extends StatefulWidget {
 class _PantallaFavouritesState extends State<PantallaFavourites> {
   //EventModel _data = EventModel(embedded: null, links: null, page: null);
   DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
@@ -52,7 +54,7 @@ class _PantallaFavouritesState extends State<PantallaFavourites> {
                       fontWeight: FontWeight.bold)),
               Expanded(
                   child: StreamBuilder(
-                stream: ref.child('1').onValue,
+                stream: ref.child(user.uid).onValue,
                 builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
                   if(!snapshot.hasData || (snapshot.data!.snapshot.value == null)){
                     return Column(children: [SizedBox(height: 40), Text("You don't have any favourites yet", style: TextStyle(

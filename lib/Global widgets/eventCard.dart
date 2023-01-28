@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -33,12 +34,14 @@ class eventCard extends StatefulWidget {
 class _eventCardState extends State<eventCard> {
   bool isLiked = false;
   DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final user = FirebaseAuth.instance.currentUser!;
 
 
 
   Future<void> _likeEvent() async {
     if(!isLiked){
-      await ref.child('1').child(widget.id).set({
+      print (user.uid);
+      await ref.child(user.uid).child(widget.id).set({
         "title": widget.title,
         "date": widget.time,
         "location": widget.city,
@@ -55,13 +58,13 @@ class _eventCardState extends State<eventCard> {
         isLiked = false;
       });
       SchedulerBinding.instance.addPostFrameCallback((_) async {
-        await ref.child('1').child(widget.id).remove();
+        await ref.child(user.uid).child(widget.id).remove();
       });
     }
   }
 
   Future<bool> checkIfLiked(String id) async {
-    final snapshot = await FirebaseDatabase.instance.ref().child('1').child(widget.id).once();
+    final snapshot = await FirebaseDatabase.instance.ref().child(user.uid).child(widget.id).once();
     if (snapshot.snapshot.exists) {
       setState(() {
         isLiked = true;

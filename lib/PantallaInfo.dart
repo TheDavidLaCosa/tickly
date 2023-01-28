@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:tickly/EventModel.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 
 import 'Global widgets/redButton.dart';
 
@@ -29,6 +31,7 @@ class _PantallaInfoState extends State<PantallaInfo>
   String city = "No city";
   String country = "No country";
   DatabaseReference ref = FirebaseDatabase.instance.ref();
+  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   void initState() {
@@ -66,7 +69,7 @@ class _PantallaInfoState extends State<PantallaInfo>
 
   Future<void> _likeEvent() async {
     if (!isLiked) {
-      await ref.child('1').child(widget.id).set({
+      await ref.child(user.uid).child(widget.id).set({
         "title": _data.embedded!.events[0]!.name!,
         "date": DateFormat('yyyy-MM-dd')
             .format(_data.embedded!.events[0]!.dates!.start!.localDate!),
@@ -81,7 +84,7 @@ class _PantallaInfoState extends State<PantallaInfo>
       });
     } else {
       SchedulerBinding.instance.addPostFrameCallback((_) async {
-        await ref.child('1').child(widget.id).remove();
+        await ref.child(user.uid).child(widget.id).remove();
       });
       setState(() {
         isLiked = false;
@@ -92,7 +95,7 @@ class _PantallaInfoState extends State<PantallaInfo>
   Future<bool> checkIfLiked(String id) async {
     final snapshot = await FirebaseDatabase.instance
         .ref()
-        .child('1')
+        .child(user.uid)
         .child(widget.id)
         .once();
     if (snapshot.snapshot.exists) {
