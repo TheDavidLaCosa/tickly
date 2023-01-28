@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tickly/ForgotPassword.dart';
 import 'package:tickly/PantallaRegister.dart';
+import 'package:tickly/PantallaSearch.dart';
 
 import 'Global widgets/redButton.dart';
 import 'Global widgets/redText.dart';
@@ -86,6 +87,9 @@ class _PantallaLoginState extends State<PantallaLogin> {
       ));
 
     }
+
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => PantallaSearch()));
   }
 
   @override

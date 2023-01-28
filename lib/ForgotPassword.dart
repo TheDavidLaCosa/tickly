@@ -63,10 +63,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         backgroundColor: const Color.fromRGBO(210, 36, 36, 1),
       ));
 
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()));
-
+      return;
     }
+
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()));
   }
 
 }

@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:tickly/EventModel.dart';
 import 'package:tickly/PantallaFavourites.dart';
+import 'package:tickly/PantallaLogin.dart';
 import 'package:tickly/PantallaNearEvent.dart';
 
 import 'Global widgets/redButton.dart';
@@ -69,6 +70,8 @@ class _PantallaSearchState extends State<PantallaSearch> {
             icon: const Icon(Icons.logout_rounded, size: 25),
             onPressed: () {
               FirebaseAuth.instance.signOut();
+              Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()));
               //Logout action here
             },
           ),
