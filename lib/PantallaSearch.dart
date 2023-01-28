@@ -173,7 +173,6 @@ class _PantallaSearchState extends State<PantallaSearch> {
                         01));
                   }),
                   const SizedBox(height: 50),
-                  //TODO Red button
                   RedButton(
                       text: "SEARCH",
                       function: () => {

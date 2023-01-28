@@ -142,11 +142,6 @@ class _eventCardState extends State<eventCard> {
                                   ),
                                 );
                                 checkIfLiked(widget.id);
-
-
-
-
-                            //TODO More info
                           },
                         ),
                       ),

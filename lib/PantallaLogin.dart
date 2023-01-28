@@ -79,6 +79,8 @@ class _PantallaLoginState extends State<PantallaLogin> {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: widget.txtInEmail.text,
           password: widget.txtInPassword.text);
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (BuildContext context) => PantallaSearch()));
     } on FirebaseAuthException catch (error) {
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -87,9 +89,6 @@ class _PantallaLoginState extends State<PantallaLogin> {
       ));
 
     }
-
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (BuildContext context) => PantallaSearch()));
   }
 
   @override
