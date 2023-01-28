@@ -1,6 +1,5 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
+import 'package:tickly/ForgotPassword.dart';
 import 'package:tickly/PantallaRegister.dart';
 
 import 'Global widgets/redButton.dart';
@@ -50,7 +49,8 @@ class _PantallaLoginState extends State<PantallaLogin> {
                     const SizedBox(height: 10),
                     TextInput(text: "Password", controller: widget.txtInPassword, hide: true),
                     const SizedBox(height: 10),
-                    RedText(text: "Forgot password?", textSize: 25, function: () => {print("a")}),
+                    RedText(text: "Forgot password?", textSize: 25, function: () => {Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (BuildContext context) => ForgotPassword()))}),
                   ]
               ),
               const SizedBox(height: 50),
