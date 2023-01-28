@@ -36,10 +36,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
-                  const Text("Enter your e-mail to reset your password", style: TextStyle(fontFamily: "jaldi",
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold)),
+                  const Text("Enter your e-mail to reset your password",
+                             style: TextStyle(fontFamily: "jaldi", fontSize: 25)),
+                  const SizedBox(height: 20,),
                   TextInput(text: "Enter email address", controller: widget.controller, hide: false),
                   const SizedBox(height: 20,),
                   RedButton(text: "Send email", function: () => {sendEmail()}),
