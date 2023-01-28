@@ -46,6 +46,9 @@ class _PantallaRegisterState extends State<PantallaRegister> {
       ScaffoldMessage(error.message.toString());
       return;
     }
+
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => PantallaLogin()));
   }
 
   void ScaffoldMessage(String txt){
