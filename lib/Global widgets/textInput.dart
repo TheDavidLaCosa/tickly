@@ -47,6 +47,7 @@ class _TextInputState extends State<TextInput> {
               hintText: widget.text, //Posem widget perqué és statefull.
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide(color: Colors.red)
               ),
               suffixIcon: IconButton(
                 onPressed: () {

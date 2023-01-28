@@ -41,7 +41,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
     if (response.statusCode == 200) {
       return EventModel.fromJson(jsonDecode(response.body));
     } else {
-      return Future.error("Error while fetching data");
+      return EventModel(embedded: null, links: null, page: null);
     }
   }
 
@@ -167,8 +167,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
                         _auxDate.month,
                         _auxDate.day,
                         00,
-                        00));
-                    print(_endDate);
+                        01));
                   }),
                   const SizedBox(height: 50),
                   //TODO Red button
@@ -186,6 +185,7 @@ class _PantallaSearchState extends State<PantallaSearch> {
                               );
                             }).catchError((error) => {print(error)})
                           }),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

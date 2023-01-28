@@ -22,7 +22,7 @@ class RedButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: const Color.fromRGBO(210, 36, 36, 1),
           borderRadius: BorderRadius.circular(10),
-          border: Border.all(),
+          border: null,
 
           boxShadow: [
             BoxShadow(

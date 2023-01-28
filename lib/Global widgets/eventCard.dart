@@ -128,16 +128,17 @@ class _eventCardState extends State<eventCard> {
                         offset: Offset(0, -8),
                         child: IconButton(
                           icon: Icon(Icons.info_outline_rounded, color: Color.fromRGBO(210, 36, 36, 1),),
-                          onPressed: () {
+                          onPressed: () async {
 
 
-                                Navigator.push(
+                                await Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) =>
                                         PantallaInfo(id: widget.id),
                                   ),
                                 );
+                                checkIfLiked(widget.id);
 
 
 

@@ -164,12 +164,7 @@ class _PantallaNearEventState extends State<PantallaNearEvent> {
                     fontSize: 25))]
                 ),
               ),
-                    /*if(_data.embedded!.events![index].embedded != null){
-
-                    }else{
-                      return eventCard(image: _data.embedded!.events[index]!.images[0]!.url!, title: _data.embedded!.events[index]!.name!, time: DateFormat('yyyy-MM-dd').format(_data.embedded!.events[index]!.dates!.start!.localDate!), country: "No country", city: "No city", link: "link");
-
-                    }*/
+              const SizedBox(height: 10),
             ],
           ),
         ),
