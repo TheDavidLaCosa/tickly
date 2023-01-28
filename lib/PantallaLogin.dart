@@ -37,7 +37,7 @@ class _PantallaLoginState extends State<PantallaLogin> {
                   fontSize: 50,
                   fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              const Text("Wellcome back, you've been missed",style: TextStyle(fontFamily: "jaldi",
+              const Text("Welcome back, you've been missed",style: TextStyle(fontFamily: "jaldi",
                   fontSize: 20,
                   fontWeight: FontWeight.bold)),
 
